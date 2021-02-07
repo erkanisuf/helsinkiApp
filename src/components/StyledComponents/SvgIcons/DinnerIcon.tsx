@@ -14,8 +14,8 @@ const DinnerIcon = () => {
           
           
           <linearGradient id="gradient">
-          <stop offset="5%" stop-color="#0093E9" />
-    <stop offset="90%" stop-color="#80D0C7" />
+          <stop offset="5%" stopColor="#0093E9" />
+    <stop offset="90%" stopColor="#80D0C7" />
    
     
         </linearGradient>
