@@ -1,5 +1,6 @@
 import React from 'react'
 import { ItemsCard } from '../Styles'
+import noImage from "../../../staticimages/No_Image_Available.jpg"
 interface Props {
 type:string;
 data:Data;
@@ -10,29 +11,38 @@ type Language = {
     en: string;
     fi:string;
 };
+interface Imageobj {
+   url:string;
+}
+type Images= {
+   images:Imageobj [];
+    
+};
   type Data = {
     name:  Record<string, Language>;
     id:string;
+    description:Images;
 };
 
 const ItemCard:React.FC<Props> = ({type,data}) => {
 console.log(data)
+console.log(data.description)
     if(!data ){return <div>Loading..</div>}
     else if (type === "events"){
         return   <ItemsCard>
-            <div className="card-img" style={{backgroundImage:"url('https://img.yle.fi/uutiset/uutisen-ims-kuvat/article11604636.ece/ALTERNATES/w960/39-7322545f8eeda7822ce')"}}></div>
+            <div className="card-img" style={{backgroundImage:`url("${data.description.images.length  ? data.description.images[0].url : noImage}")`}}></div>
           <p>{data.name.en}</p>
-          <p>{data.name.fi}</p>
+        
         </ItemsCard>
     
       
     }else
     return (
         <ItemsCard>
-           
-            <div className="card-img" style={{backgroundImage:"url('https://img.yle.fi/uutiset/uutisen-ims-kuvat/article11604636.ece/ALTERNATES/w960/39-7322545f8eeda7822ce')"}}></div>
+         
+           <div className="card-img" style={{backgroundImage:`url("${data.description.images.length   ? data.description.images[0].url : noImage}")`}}></div> 
             <p>{data.name.en}</p>
-          <p>{data.name.fi}</p>
+         
           <p>{data.id}</p>
         </ItemsCard>
     

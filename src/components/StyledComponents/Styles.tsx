@@ -20,7 +20,8 @@ align-items:center;
 width:200px;
 background-color:white;
 height: 160px;
-border:2px solid #064468;
+border-bottom:5px solid #3590c5;
+border-top:5px solid #3adce7;
 border-radius:10px;
 margin:0 10px;
 cursor: pointer;
@@ -92,10 +93,10 @@ justify-content:center;
 
 align-content:center;
 align-items:center;
-width:400px;
+width:250px;
 background-color:white;
-height: 300px;
-box-shadow:1px 1px 12px 1px #adadad;
+height: 250px;
+box-shadow:1px 1px 5px 0px #adadad;
 border-radius:10px;
 margin: 10px auto;
 cursor: pointer;
@@ -114,4 +115,29 @@ div{  background-size: cover;
    border-top-left-radius:10px;
    width:100%;
    padding:5px;
-   height: 200px;}`
+   height: 150px;}`
+
+export const CarouselContainer = styled.div`
+width:80%;
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
+margin: 80px auto;
+border-bottom:1px solid #a3b4c7;
+padding:50px;
+h1{
+  text-align:left;
+}`
+
+interface SVGProps {
+  width:number;
+  height:number;
+ };
+ export const SvgContainer= styled.div<SVGProps >`display:flex;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ margin-bottom:-50px;
+ width:${props => props.width}px;
+ height:${props => props.height}px;
+ `
