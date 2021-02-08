@@ -1,42 +1,42 @@
 import React from 'react'
 import { ItemsCard } from '../Styles'
+interface Props {
+type:string;
+data:Data;
 
-const ItemCard = () => {
+}
+
+type Language = {
+    en: string;
+    fi:string;
+};
+  type Data = {
+    name:  Record<string, Language>;
+    id:string;
+};
+
+const ItemCard:React.FC<Props> = ({type,data}) => {
+console.log(data)
+    if(!data ){return <div>Loading..</div>}
+    else if (type === "events"){
+        return   <ItemsCard>
+            <div className="card-img" style={{backgroundImage:"url('https://img.yle.fi/uutiset/uutisen-ims-kuvat/article11604636.ece/ALTERNATES/w960/39-7322545f8eeda7822ce')"}}></div>
+          <p>{data.name.en}</p>
+          <p>{data.name.fi}</p>
+        </ItemsCard>
+    
+      
+    }else
     return (
-        <div style={{width:'100%',margin:'250px auto',display:'flex',justifyContent:'flex-start',flexWrap:'wrap'}}>
-
-        
         <ItemsCard>
            
             <div className="card-img" style={{backgroundImage:"url('https://img.yle.fi/uutiset/uutisen-ims-kuvat/article11604636.ece/ALTERNATES/w960/39-7322545f8eeda7822ce')"}}></div>
-            <p>Hello World</p>
+            <p>{data.name.en}</p>
+          <p>{data.name.fi}</p>
+          <p>{data.id}</p>
         </ItemsCard>
-        <ItemsCard>
-           
-            <div className="card-img" style={{backgroundImage:"url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRfpZB0_3qGRT0vx7Jlw662goIgQc9en4esg&usqp=CAU')"}}></div>
-            <p>Hello World</p>
-        </ItemsCard>
-        <ItemsCard>
-           
-            <div className="card-img" style={{backgroundImage:"url('https://img.yle.fi/uutiset/uutisen-ims-kuvat/article11604636.ece/ALTERNATES/w960/39-7322545f8eeda7822ce')"}}></div>
-            <p>Hello World</p>
-        </ItemsCard>
-        <ItemsCard>
-           
-            <div className="card-img" style={{backgroundImage:"url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRfpZB0_3qGRT0vx7Jlw662goIgQc9en4esg&usqp=CAU')"}}></div>
-            <p>Hello World</p>
-        </ItemsCard>
-        <ItemsCard>
-           
-            <div className="card-img" style={{backgroundImage:"url('https://img.yle.fi/uutiset/uutisen-ims-kuvat/article11604636.ece/ALTERNATES/w960/39-7322545f8eeda7822ce')"}}></div>
-            <p>Hello World</p>
-        </ItemsCard>
-        <ItemsCard>
-           
-            <div className="card-img" style={{backgroundImage:"url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRfpZB0_3qGRT0vx7Jlw662goIgQc9en4esg&usqp=CAU')"}}></div>
-            <p>Hello World</p>
-        </ItemsCard>
-        </div>
+    
+      
     )
 }
 
