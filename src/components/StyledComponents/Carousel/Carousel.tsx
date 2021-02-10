@@ -22,6 +22,7 @@ interface Props {
         name:  Record<string, Language>;
         id:string;
         description:Images;
+        
     };
     const responsive = {
         superLargeDesktop: {
@@ -48,7 +49,7 @@ interface Props {
         }
       };
 const CarouselComp:React.FC<Props> = ({data,type}) => {
-    console.log(data,'carous')
+    
     return (
         
           <Carousel responsive={responsive}>

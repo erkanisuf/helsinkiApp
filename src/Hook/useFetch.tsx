@@ -9,7 +9,8 @@ export const useFetch = (url:string) => {
       const fetchData = async () => {
        
         try { 
-          const res = await fetch(`https://cors-anywhere.herokuapp.com/${url}`,{
+          // const res = await fetch(`https://cors-anywhere.herokuapp.com/${url}`,{
+          const res = await fetch(`${url}`,{
             method: 'GET',
            
             headers: {'Content-Type':'application/json',},

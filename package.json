@@ -2,7 +2,6 @@
   "name": "helsinkiapp",
   "version": "0.1.0",
   "private": true,
-  
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
@@ -12,7 +11,6 @@
     "@types/react": "^17.0.1",
     "@types/react-dom": "^17.0.0",
     "axios": "^0.21.1",
-    
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-multi-carousel": "^2.6.1",
@@ -46,6 +44,7 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.7"
+    "@types/styled-components": "^5.1.7",
+    "dotenv": "^8.2.0"
   }
 }

@@ -122,7 +122,8 @@ width:80%;
 display:flex;
 flex-direction:column;
 justify-content:flex-start;
-margin: 80px auto;
+margin: 0 auto;
+
 border-bottom:1px solid #a3b4c7;
 padding:50px;
 h1{
