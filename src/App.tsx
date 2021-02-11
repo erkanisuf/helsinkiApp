@@ -1,46 +1,49 @@
 
 import React from 'react';
+import { Route,  Switch } from 'react-router';
 import './App.css';
-import CarouselComp from './components/StyledComponents/Carousel/Carousel';
+
 
 import NavBar from './components/StyledComponents/NavBar/NavBar';
-import { CarouselContainer, SvgContainer } from './components/StyledComponents/Styles';
-import ActivitiesIcon from './components/StyledComponents/SvgIcons/ActivitiesIcon';
-import EventsIcon from './components/StyledComponents/SvgIcons/EventsIcon';
-import PlacesIcon from './components/StyledComponents/SvgIcons/PlacesIcon';
-import { useFetch } from './Hook/useFetch';
+import FrontPage from './FrontPage';
+
 
 
 function App() {
-  // const res = useFetch("http://open-api.myhelsinki.fi/v1/places/?language_filter=en&limit=10")
-  const places = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10`) //Places
-  const events = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10Events`)
-  const activities = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10Activities`)
-  const   {data}  = places//Places
  
+  
   
  
   return (
     <div className="App" >
    
-  <NavBar />
- 
-   < CarouselContainer >
-   <SvgContainer  width={150} height={150}  ><PlacesIcon  /> <h1> Places</h1></SvgContainer>
+
   
-   <CarouselComp type={"places"} data={data}/>
-   </ CarouselContainer >
-   < CarouselContainer >
-   <SvgContainer  width={200} height={150}  ><ActivitiesIcon  /> <h1> Activities</h1></SvgContainer>
-   <CarouselComp type={"events"} data={activities.data}/>
-   </ CarouselContainer >
-   < CarouselContainer >
-   <SvgContainer  width={150} height={150}  ><EventsIcon  /> <h1> Events</h1></SvgContainer>
-   <CarouselComp type={"events"} data={events.data}/>
-   </ CarouselContainer >
-  
+  <Switch>
+          <Route path="/about">
+            <h1>About</h1>
+          </Route>
+          <Route path="/users">
+            <h1>Users</h1>
+          </Route>
+          <Route path="/">
+          <NavBar />
+          <FrontPage /> 
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+          <linearGradient id="gradient">
+          <stop offset="10%" stopColor="#70c0ce" />
+    <stop offset="90%" stopColor="#0093E9" />
+   
     
-  
+        </linearGradient>
+  <path fill="url(#gradient)" fill-opacity="1" d="M0,192L120,208C240,224,480,256,720,229.3C960,203,1200,117,1320,74.7L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+</svg>
+          </Route>
+
+        </Switch>
+        
+
+
     </div>
   );
 }

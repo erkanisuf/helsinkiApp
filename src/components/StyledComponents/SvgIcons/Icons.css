@@ -2,5 +2,18 @@
   width: 100px;
   height: 150px;
 }
-
+.LoadingIcon {
+  animation: spin 2s linear infinite;
+  margin: 0 auto;
+  width: 100px;
+  height: 150px;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
 /* Select Icon has own style */

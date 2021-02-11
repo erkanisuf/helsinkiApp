@@ -27,7 +27,7 @@ type Images= {
 const ItemCard:React.FC<Props> = ({type,data}) => {
 // console.log(data)
 // console.log(data.description)
-    if(!data ){return <div>Loading..</div>}
+    if(!data ){return <div><h1>Loading..</h1></div>}
     else if (type === "events"){
         return   <ItemsCard>
             <div className="card-img" style={{backgroundImage:`url("${data.description.images.length  ? data.description.images[0].url : noImage}")`}}></div>

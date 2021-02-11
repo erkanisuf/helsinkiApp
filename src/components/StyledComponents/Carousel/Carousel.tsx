@@ -2,6 +2,8 @@ import React from 'react'
 import Carousel from "react-multi-carousel";
 import ItemCard from '../ItemCard/ItemCard';
 import "react-multi-carousel/lib/styles.css";
+import { SvgContainer } from '../Styles';
+import LoadingIcon from '../SvgIcons/LoadingIcon';
 interface Props {
    
     data:Data [];
@@ -49,7 +51,7 @@ interface Props {
         }
       };
 const CarouselComp:React.FC<Props> = ({data,type}) => {
-    
+    if(!data.length){return <SvgContainer  width={120} height={150} style={{margin:'0 auto'}} ><LoadingIcon  /></SvgContainer>}
     return (
         
           <Carousel responsive={responsive}>
