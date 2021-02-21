@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React,{useEffect} from 'react';
 import './App.css';
 import CarouselComp from './components/StyledComponents/Carousel/Carousel';
 
@@ -21,6 +21,7 @@ function FrontPage() {
   const placeToEat = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10Eat`)
   const   {data}  = places//Places
  
+  
   
   
  
