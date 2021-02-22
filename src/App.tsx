@@ -2,6 +2,7 @@
 import React from 'react';
 import { Route,  Switch } from 'react-router';
 import './App.css';
+import Page from './components/Pages/Page';
 
 
 import NavBar from './components/StyledComponents/NavBar/NavBar';
@@ -20,11 +21,11 @@ function App() {
 
   
   <Switch>
-          <Route path="/about">
-            <h1>About</h1>
+          <Route path="/events">
+          <Page link={`${process.env.REACT_APP_SERVER_URL}/api/Routs/allEvents`} type={"events"}/> 
           </Route>
-          <Route path="/users">
-            <h1>Users</h1>
+          <Route path="/placestoeat">
+            <Page link={`${process.env.REACT_APP_SERVER_URL}/api/Routs/allPlacesToEat`} type={''}/> 
           </Route>
           <Route path="/">
           <NavBar />

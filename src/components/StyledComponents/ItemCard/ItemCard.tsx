@@ -3,7 +3,11 @@ import { ItemsCard } from '../Styles'
 import noImage from "../../../staticimages/No_Image_Available.jpg"
 interface Props {
 type:string;
-data:Data;
+data:{
+  name:  Record<string, Language>;
+    id:string;
+    description:Images;
+};
 
 }
 
@@ -18,11 +22,7 @@ type Images= {
    images:Imageobj [];
     
 };
-  type Data = {
-    name:  Record<string, Language>;
-    id:string;
-    description:Images;
-};
+ 
 
 const ItemCard:React.FC<Props> = ({type,data}) => {
 // console.log(data)
@@ -36,7 +36,10 @@ const ItemCard:React.FC<Props> = ({type,data}) => {
         </ItemsCard>
     
       
-    }else
+    }else if(data.description.images === null){
+      return <div><h1>Loading..lenght</h1></div>
+    }
+    else
     return (
         <ItemsCard>
          
