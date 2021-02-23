@@ -5,27 +5,28 @@ import "react-multi-carousel/lib/styles.css";
 import { SvgContainer } from '../Styles';
 import LoadingIcon from '../SvgIcons/LoadingIcon';
 interface Props {
+  type:string;
+  data:{
+    name:  Language;
+      id:string;
+      description:Images;
+      location:{lat:number,lon:number}
+  }[];
+  
+  }
+  
+  type Language = {
+      en: string;
+      fi:string;
+  };
+  interface Imageobj {
+     url:string;
+  }
+  type Images= {
+     images:Imageobj [];
+      
+  };
    
-    data:Data [];
-   type:string;
-    }
-    type Language = {
-        en: string;
-        fi:string;
-    };
-    interface Imageobj {
-       url:string;
-    }
-    type Images= {
-       images:Imageobj [];
-        
-    };
-      type Data = {
-        name:  Record<string, Language>;
-        id:string;
-        description:Images;
-        
-    };
     const responsive = {
         superLargeDesktop: {
           // the naming can be any, depends on you.
@@ -51,15 +52,24 @@ interface Props {
         }
       };
 const CarouselComp:React.FC<Props> = ({data,type}) => {
+  
+
+  data.sort((a,b)=> {
+    if (a.description.images==null) return 1 // this function fixes issues if the Api has value null
+    if (b.description.images==null) return 0
+   return b.description.images.length - a.description.images.length
+}) ;
     if(!data.length){return <SvgContainer  width={120} height={150} style={{margin:'0 auto'}} ><LoadingIcon  /></SvgContainer>}
     return (
         
-          <Carousel responsive={responsive}>
+          <Carousel
+          renderButtonGroupOutside={true}
+           responsive={responsive}>
            {data.map((el, index) => {
-          return <ItemCard key={index} type={type} data={el} />;
+          return <ItemCard key={index} type={type}  data={el} />;
         })}
            </Carousel>
-     
+           
        
     )
 }

@@ -16,9 +16,9 @@ import { useFetch } from './Hook/useFetch';
 function FrontPage() {
   // const res = useFetch("http://open-api.myhelsinki.fi/v1/places/?language_filter=en&limit=10")
   const places = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10`) //Places
-  const events = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10Events`)
-  const activities = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10Activities`)
-  const placeToEat = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10Eat`)
+  const events = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10Events`) //events
+  const activities = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10Activities`) //activities
+  const placeToEat = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10Eat`) //placesto eat
   const   {data}  = places//Places
  
   
@@ -31,7 +31,7 @@ function FrontPage() {
   
   
   < CarouselContainer >
-   <SvgContainer  width={250} height={150}  ><DinnerIcon  /><h1>Restaurants </h1> </SvgContainer>
+   <SvgContainer  width={250} height={170}  ><DinnerIcon  /><h1>Restaurants </h1> </SvgContainer>
    <CarouselComp type={"events"} data={placeToEat.data}/>
    </ CarouselContainer >
    < CarouselContainer >
@@ -39,11 +39,11 @@ function FrontPage() {
    <CarouselComp type={"places"} data={data}/>
    </ CarouselContainer >
    < CarouselContainer >
-   <SvgContainer  width={200} height={150}  ><ActivitiesIcon  /> <h1> Activities</h1></SvgContainer>
+   <SvgContainer  width={200} height={160}  ><ActivitiesIcon  /> <h1> Activities</h1></SvgContainer>
    <CarouselComp type={"events"} data={activities.data}/>
    </ CarouselContainer >
    < CarouselContainer >
-   <SvgContainer  width={150} height={150}  ><EventsIcon  /> <h1> Events</h1></SvgContainer>
+   <SvgContainer  width={150} height={160}  ><EventsIcon  /> <h1> Events</h1></SvgContainer>
    <CarouselComp type={"events"} data={events.data}/>
    </ CarouselContainer >
   

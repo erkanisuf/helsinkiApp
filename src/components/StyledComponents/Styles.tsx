@@ -53,7 +53,14 @@ export const RowDiv= styled.div<RowDivProps  >`display:flex;
 flex-direction:row;
 margin-bottom:${props => props.marginBottom}px;
 justify-content:center;
-align-items:center;`
+align-items:center;
+font-family: 'Kalam', cursive;
+font-size:18px;
+p{
+  
+color:black;
+}
+a{text-decoration:none ;}`
 
 export const SearchBarStyle = styled.input`
 width:400px;
@@ -90,7 +97,9 @@ export const ItemsCard = styled.div`
 display:'flex';
 flex-direction:column;
 justify-content:center;
-
+font-family: 'Open Sans', sans-serif;
+font-weight:600;
+color:#2e2d2d;
 align-content:center;
 align-items:center;
 width:250px;
@@ -98,7 +107,7 @@ background-color:white;
 height: 250px;
 box-shadow:1px 1px 5px 0px #adadad;
 border-radius:10px;
-margin: 10px auto;
+margin: 10px ;
 cursor: pointer;
 transition:0.1s;
 overflow:hidden;
@@ -107,7 +116,7 @@ border-bottom:12px solid #fdfdfd;
     border-bottom:12px solid #094263;
     
 }
-p{margin:0;}
+p{margin:10px;}
 div{  background-size: cover;
    background-repeat: no-repeat;
    background-position: center center;
@@ -141,4 +150,53 @@ interface SVGProps {
  margin-bottom:-50px;
  width:${props => props.width}px;
  height:${props => props.height}px;
+ 
  `
+
+export const PageContainer= styled.div`display:flex;
+display:flex;
+width:75%;
+margin:0 auto;
+align-items:flex-start;
+justify-content:flex-start;
+flex-wrap:wrap;
+margin-bottom:20px;
+
+
+`
+
+export const PageHeader = styled.div`
+
+display:flex;
+flex-direction:row;
+width:100%;
+margin:0 auto;
+background-color: #10a7ff;
+background-image: linear-gradient(160deg, #0093E9 60%, #80D0C7 100%);
+justify-content:space-around;
+padding-top:50px;
+align-items:center;
+align-self:center;
+`
+
+
+export const NextPrevbtn = styled.button`
+
+background:none;
+border:none;
+outline:none;
+cursor: pointer;
+border-bottom:5px solid white;
+border-radius:5px;
+&:active{
+  background:none;
+border:none;
+outline:none;
+
+
+}
+&:hover{
+  border-bottom:5px solid #10a7ff;
+
+}
+`

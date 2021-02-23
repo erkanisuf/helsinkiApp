@@ -2,9 +2,12 @@ import React from 'react'
 import {  RowDiv, SearchBarStyle, SearchButton, SelectStyle } from '../Styles'
 import SearchIcon from '../SvgIcons/SearchIcon'
 
-const SearchBar = () => {
+interface Props {
+    marginBottom:number;
+}
+const SearchBar:React.FC<Props> = ({marginBottom}) => {
     return (
-        <RowDiv marginBottom={100}>
+        <RowDiv marginBottom={marginBottom}>
             
             <SearchButton> <SearchIcon /></SearchButton>< SearchBarStyle placeholder="Search keyword..."/>
            

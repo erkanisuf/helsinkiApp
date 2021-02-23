@@ -1,85 +1,129 @@
-import React, { forwardRef }  from 'react'
+import React, { useState,useEffect}  from 'react'
 import { useFetch } from '../../Hook/useFetch';
-import ItemCard from '../StyledComponents/ItemCard/ItemCard';
 
-import {List,AutoSizer} from 'react-virtualized';
-import './Page.css'
+
+import ItemCard from '../StyledComponents/ItemCard/ItemCard';
+import SearchBar from '../StyledComponents/SearchBar/SearchBar';
+import { NextPrevbtn, PageContainer, SvgContainer } from '../StyledComponents/Styles';
+import SVGbackground from '../StyledComponents/SVGbackground/SVGbackground';
+import SVGPageHeader from '../StyledComponents/SVGbackground/SVGPageHeader';
+import LoadingIcon from '../StyledComponents/SvgIcons/LoadingIcon';
+import NextIcon from '../StyledComponents/SvgIcons/NextIcon';
+import PrevIcon from '../StyledComponents/SvgIcons/PrevIcon';
+
 
 
 interface Props {
     link:string;
     type:string;
+    
+
 }
+
+type Language = {
+    en: string;
+    fi:string;
+};
+
+type Data = {
+    name:  Language;
+      id:string;
+      description:Images;
+      length:number;
+      location:{lat:number,lon:number}
+}
+interface Imageobj {
+   url:string;
+}
+type Images= {
+   images:Imageobj [];
+    
+};
 
 
 const Page:React.FC<Props>= ({link,type}) => {
     const allItems = useFetch(link);
-    const {data}:any = allItems;
-    console.log(allItems ,'ITEMS');
-  
-  
-    function rowRenderer({key, index, style}:any) {
-        return (
-          <div key={key} style={style}>
-            <ItemCard key={index} type={type} data={data[index]} />
-          </div>
-        );
-      }
-      const ITEMS_COUNT = data.length
-const ITEM_SIZE = 300
-    return (
-        <div>
-            <h1>Page</h1>
-            
+    const [data,setData] = useState<Data[]>(allItems.data);
+    const [limit,setLimit] = useState<number>(20); // How many items per page
+    const [start,setStart] = useState<number>(0); // From where in the Api to start
+    useEffect(() => {
+      setData(allItems.data);
+    }, [allItems.data.length])
+      
+   
+
+    
+  // Pagination Post Request to backend
+   const FetchMoreItems = (value:number) =>{
+   
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/pagingFetch`, {
+      method: 'POST',
+      body:  JSON.stringify({
+        limit:limit,
+        start:value,
+        typeplace:type
+      }),
+      headers: {'Content-Type':'application/json',},
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result,'kk')
+        setData(result.data)
+      })
+      .catch((err) => console.log(err))
+   }
+   // Pagination
+   const NextPage = () =>{
+     console.log(type)
      
-            <AutoSizer>
-    {({ height, width }) => {
-      const itemsPerRow = Math.floor(width / ITEM_SIZE);
-      const rowCount = Math.ceil(ITEMS_COUNT / itemsPerRow);
+    if (start === 0){
       
-      return (
-        <List
-          className='List'
-          width={600}
-          height={600}
-          rowCount={rowCount}
-          rowHeight={ITEM_SIZE}
-          rowRenderer={
-            ({ index, key, style }) => {
-              const items = [];
-              const fromIndex = index * itemsPerRow;
-              const toIndex = Math.min(fromIndex + itemsPerRow, ITEMS_COUNT);
-
-              for (let i = fromIndex; i < data.length; i++) {
-                items.push(
-                  <div
-                    className='Item'
-                    key={i}
-                  >
-                      <ItemCard key={i} type={type} data={data[i]} />
-                    
-                  </div>
-                )
-              }
-
-              return (
-                <div
-                  className='Row'
-                  key={key}
-                  style={style}
-                >
-                  {items}
-                </div>
-              )
-            }
-          }
-        />
-      )
-    }}
-  </AutoSizer>,
+      FetchMoreItems(20);
+      setStart(20);
+     }else{
+      FetchMoreItems(start+20);
+      setStart(prev=>prev+20);
+     }
+    
+   }
+   const PrevPage = () =>{
+     if (start >0){
       
-        </div>
-          /* <ItemCard key={rowIndex} type={type} data={data[rowIndex]} /> */
+      FetchMoreItems(start-20);
+      setStart(prev=>prev-20);
+     }
+   
+    
+   }
+   console.log(start)
+   if(!data.length){
+      return <SVGPageHeader><SvgContainer  width={120} height={150} style={{margin:'0 auto'}} ><LoadingIcon  /></SvgContainer></SVGPageHeader>
+   }
+    return (
+        
+             <SVGPageHeader>
+           
+            
+            <PageContainer>
+          {data.sort((a:Data,b:Data)=> {
+      if (a.description.images==null) return 1 // this function fixes issues if the Api has value null (images)
+      if (b.description.images==null) return 0 
+     return b.description.images.length - a.description.images.length // Sorts Items first by image avaibility
+ }).map((el,index)=>{
+            return <ItemCard key={index} type={type} data={el} />
+
+          })}
+              
+            </PageContainer>
+            <div style={{display:'flex',width:'80%',justifyContent:'flex-end'}}>
+            <NextPrevbtn onClick={PrevPage}><SvgContainer  width={50} height={50} style={{margin:'0 auto'}} ><PrevIcon  /></SvgContainer></NextPrevbtn>
+            <NextPrevbtn  onClick={NextPage}><SvgContainer  width={50} height={50} style={{margin:'0 auto'}} ><NextIcon  /></SvgContainer></NextPrevbtn>
+            
+            </div>
+            
+            </SVGPageHeader>
+        
+         
     )
 }
 
