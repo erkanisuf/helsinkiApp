@@ -1,7 +1,7 @@
 import React, { useState,useEffect}  from 'react'
 import { useFetch } from '../../Hook/useFetch';
 
-
+import {useLocation} from 'react-router-dom'
 import ItemCard from '../StyledComponents/ItemCard/ItemCard';
 import SearchBar from '../StyledComponents/SearchBar/SearchBar';
 import { NextPrevbtn, PageContainer, SvgContainer } from '../StyledComponents/Styles';
@@ -42,15 +42,17 @@ type Images= {
 
 
 const Page:React.FC<Props>= ({link,type}) => {
-    const allItems = useFetch(link);
+  const location = useLocation(); // Router React - using location to refetch in case path changes.
+    const allItems = useFetch(link, location.pathname);
+ 
     const [data,setData] = useState<Data[]>(allItems.data);
     const [limit,setLimit] = useState<number>(20); // How many items per page
     const [start,setStart] = useState<number>(0); // From where in the Api to start
-    useEffect(() => {
-      setData(allItems.data);
-    }, [allItems.data.length])
-      
    
+    useEffect(() => {
+      setStart(0); // sets pagination back to 0 in case we change url path
+      setData(allItems.data);
+    }, [location.pathname,allItems.data])
 
     
   // Pagination Post Request to backend

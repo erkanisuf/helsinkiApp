@@ -38,7 +38,7 @@ function App() {
             <Page link={`${process.env.REACT_APP_SERVER_URL}/api/Routs/allActivities`} type={"activities"}/> 
           </Route>
           <Route path="/allplaces">
-            <Page link={`${process.env.REACT_APP_SERVER_URL}/api/Routs/allActivities`} type={"allplaces"}/> 
+            <Page link={`${process.env.REACT_APP_SERVER_URL}/api/Routs/allPlaces`} type={"allplaces"}/> 
           </Route>
 
           <Route path="/">

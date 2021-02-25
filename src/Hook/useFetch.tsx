@@ -2,7 +2,7 @@ import React from "react";
 
 
 
-export const useFetch = (url:string) => {
+export const useFetch = (url:string,props?:any ) => {
     const [response, setResponse] = React.useState([]);
     const [error, setError] = React.useState(null);
     React.useEffect(() => {
@@ -23,6 +23,6 @@ export const useFetch = (url:string) => {
         }
       };
       fetchData();
-    }, []);
+    }, [props]);
     return { data:response, error };
   };

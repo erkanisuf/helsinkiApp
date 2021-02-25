@@ -200,3 +200,31 @@ outline:none;
 
 }
 `
+
+export const PagesNav = styled.div`
+
+display:flex;
+width:30%;
+justify-content:space-between;
+color:white;
+
+font-size:20px;
+
+a{
+  font-family: 'Open Sans', sans-serif;
+  color:white;
+  text-decoration:none;
+  font-weight:400;
+  text-transform: uppercase;
+  padding:5px 10px;
+  border:1px solid #0093E9;
+  border-radius:15px;
+  transition:0.5s ;
+  &:hover{
+    background-color: #54b4ec;
+ border:1px solid #ffffff;
+ }
+}
+
+
+`
