@@ -2,6 +2,7 @@ import React from 'react'
 import { ItemsCard } from '../Styles'
 import noImage from "../../../staticimages/No_Image_Available.jpg"
 import { getDistance } from "geolib"; // For Distance LIbary
+import {Link} from 'react-router-dom'
 interface Props {
 type:string;
 data:{
@@ -38,23 +39,33 @@ const ItemCard:React.FC<Props> = ({type,data}) => {
       return <div></div>
     }
     else if (type === "events"){
-        return   <ItemsCard>
+        return  <Link to={{
+          pathname: `/allbyid/${data.id}/`,
+          state: {
+            id:data.id,
+            type:type
+          }}}> <ItemsCard>
             <div className="card-img" style={{backgroundImage:`url("${data.description.images.length  ? data.description.images[0].url : noImage}")`}}></div>
           <p>{data.name.en ? data.name.en :data.name.fi }</p>
           <div> {(myDistance / 1000).toFixed(1)}km</div>
-        </ItemsCard>
+        </ItemsCard></Link>
     
       
     }
     else
     return (
-        <ItemsCard>
+        <Link to={{
+          pathname: `/allbyid/${data.id}/`,
+          state: {
+            id:data.id,
+            type:type
+          }}}><ItemsCard>
          
            <div className="card-img" style={{backgroundImage:`url("${data.description.images.length   ? data.description.images[0].url : noImage}")`}}></div> 
             <p>{data.name.en}</p>
          
             <div> {(myDistance / 1000).toFixed(1)}km</div>
-        </ItemsCard>
+        </ItemsCard></Link>
     
       
     )

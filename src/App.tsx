@@ -2,6 +2,7 @@
 import React from 'react';
 import { Route,  Switch } from 'react-router';
 import './App.css';
+import IDPage from './components/IDPage/IDPage';
 import Page from './components/Pages/Page';
 
 
@@ -39,6 +40,10 @@ function App() {
           </Route>
           <Route path="/allplaces">
             <Page link={`${process.env.REACT_APP_SERVER_URL}/api/Routs/allPlaces`} type={"allplaces"}/> 
+          </Route>
+          <Route path="/allbyid/:id">
+           
+            <IDPage />
           </Route>
 
           <Route path="/">

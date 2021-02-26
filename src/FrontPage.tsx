@@ -20,7 +20,7 @@ function FrontPage() {
   const activities = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10Activities`) //activities
   const placeToEat = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10Eat`) //placesto eat
   const   {data}  = places//Places
- 
+ console.log(events)
   
   
   
@@ -29,23 +29,26 @@ function FrontPage() {
     <div  >
    
   
-  
-  < CarouselContainer >
-   <SvgContainer  width={250} height={170}  ><DinnerIcon  /><h1>Restaurants </h1> </SvgContainer>
-   <CarouselComp type={"events"} data={placeToEat.data}/>
-   </ CarouselContainer >
-   < CarouselContainer >
+   {placeToEat.error ? <h1 style={{color:'red'}}>Error, please refresh!</h1> : 
+    < CarouselContainer >
+    <SvgContainer  width={250} height={170}  ><DinnerIcon  /><h1>Restaurants </h1> </SvgContainer>
+    <CarouselComp type={"events"} data={placeToEat.data}/>
+    </ CarouselContainer >}
+ 
+    {places.error ? <h1 style={{color:'red'}}>Error, please refresh!</h1> : < CarouselContainer >
    <SvgContainer  width={150} height={150}  ><PlacesIcon  /> <h1> Places</h1></SvgContainer>
    <CarouselComp type={"places"} data={data}/>
-   </ CarouselContainer >
-   < CarouselContainer >
+   </ CarouselContainer >}
+   
+   {activities.error ? <h1 style={{color:'red'}}>Error, please refresh!</h1> : < CarouselContainer >
    <SvgContainer  width={200} height={160}  ><ActivitiesIcon  /> <h1> Activities</h1></SvgContainer>
    <CarouselComp type={"events"} data={activities.data}/>
-   </ CarouselContainer >
-   < CarouselContainer >
+   </ CarouselContainer >}
+
+   {events.error ? <h1 style={{color:'red'}}>Error, please refresh!</h1> : < CarouselContainer >
    <SvgContainer  width={150} height={160}  ><EventsIcon  /> <h1> Events</h1></SvgContainer>
    <CarouselComp type={"events"} data={events.data}/>
-   </ CarouselContainer >
+   </ CarouselContainer >}
   
   
     
