@@ -37,7 +37,7 @@ const SVGPageHeader : React.FunctionComponent<MyProps>= (props )=> {
                 </svg>
                 
                 
-<div style={{margin:'0 auto'}}>
+<div style={{margin:'0 auto',minHeight:'400px'}}>
 {props.children}
 </div>
           

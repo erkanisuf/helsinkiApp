@@ -20,35 +20,34 @@ function FrontPage() {
   const activities = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10Activities`) //activities
   const placeToEat = useFetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/front10Eat`) //placesto eat
   const   {data}  = places//Places
- console.log(events)
-  
+ 
   
   
  
   return (
-    <div  >
+    <div >
    
   
-   {placeToEat.error ? <h1 style={{color:'red'}}>Error, please refresh!</h1> : 
+    
     < CarouselContainer >
     <SvgContainer  width={250} height={170}  ><DinnerIcon  /><h1>Restaurants </h1> </SvgContainer>
-    <CarouselComp type={"events"} data={placeToEat.data}/>
-    </ CarouselContainer >}
+    {placeToEat.error ? <h1 style={{color:'red'}}>Error, please refresh!</h1> :<CarouselComp type={"placetoeat"} data={placeToEat.data}/>}
+    </ CarouselContainer >
  
-    {places.error ? <h1 style={{color:'red'}}>Error, please refresh!</h1> : < CarouselContainer >
+    < CarouselContainer >
    <SvgContainer  width={150} height={150}  ><PlacesIcon  /> <h1> Places</h1></SvgContainer>
-   <CarouselComp type={"places"} data={data}/>
-   </ CarouselContainer >}
+   {places.error ? <h1 style={{color:'red'}}>Error, please refresh!</h1> : <CarouselComp type={"allplaces"} data={data}/>}
+   </ CarouselContainer >
    
-   {activities.error ? <h1 style={{color:'red'}}>Error, please refresh!</h1> : < CarouselContainer >
+    < CarouselContainer >
    <SvgContainer  width={200} height={160}  ><ActivitiesIcon  /> <h1> Activities</h1></SvgContainer>
-   <CarouselComp type={"events"} data={activities.data}/>
-   </ CarouselContainer >}
+   {activities.error ? <h1 style={{color:'red'}}>Error, please refresh!</h1> :<CarouselComp type={"activities"} data={activities.data}/>}
+   </ CarouselContainer >
 
-   {events.error ? <h1 style={{color:'red'}}>Error, please refresh!</h1> : < CarouselContainer >
+    < CarouselContainer >
    <SvgContainer  width={150} height={160}  ><EventsIcon  /> <h1> Events</h1></SvgContainer>
-   <CarouselComp type={"events"} data={events.data}/>
-   </ CarouselContainer >}
+   {events.error ? <h1 style={{color:'red'}}>Error, please refresh!</h1> : <CarouselComp type={"events"} data={events.data}/>}
+   </ CarouselContainer >
   
   
     

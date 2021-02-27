@@ -32,8 +32,8 @@ const ItemCard:React.FC<Props> = ({type,data}) => {
     { latitude: 60.17626, longitude: 24.938082 }, // my position this is just dummy data
     { latitude: data.location.lat, longitude: data.location.lon } // restourant position
   );
-// console.log(data)
-// console.log(data.description)
+
+
     if(!data ){return <div><h1>Loading..</h1></div>}
     else if(data.description.images === null){
       return <div></div>

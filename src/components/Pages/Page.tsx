@@ -44,11 +44,11 @@ type Images= {
 const Page:React.FC<Props>= ({link,type}) => {
   const location = useLocation(); // Router React - using location to refetch in case path changes.
     const allItems = useFetch(link, location.pathname);
- 
+  console.log(allItems)
     const [data,setData] = useState<Data[]>(allItems.data);
     const [limit,setLimit] = useState<number>(20); // How many items per page
     const [start,setStart] = useState<number>(0); // From where in the Api to start
-   
+    const [error,setError] = useState<boolean>(false);
     useEffect(() => {
       setStart(0); // sets pagination back to 0 in case we change url path
       setData(allItems.data);
@@ -69,14 +69,14 @@ const Page:React.FC<Props>= ({link,type}) => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result,'kk')
+       
         setData(result.data)
       })
-      .catch((err) => console.log(err))
+      .catch((err) => setError(true))
    }
    // Pagination
    const NextPage = () =>{
-     console.log(type)
+    
      
     if (start === 0){
       
@@ -97,10 +97,12 @@ const Page:React.FC<Props>= ({link,type}) => {
    
     
    }
-   console.log(start)
-   if(!data.length){
-      return <SVGPageHeader><SvgContainer  width={120} height={150} style={{margin:'0 auto'}} ><LoadingIcon  /></SvgContainer></SVGPageHeader>
-   }
+   
+   if(error || allItems.error){
+    return <SVGPageHeader><h1 style={{color:'red'}}>Something went wrong please refresh.</h1></SVGPageHeader>
+   }else if(!data.length){
+    return <SVGPageHeader><SvgContainer  width={120} height={150} style={{margin:'0 auto'}} ><LoadingIcon  /></SvgContainer></SVGPageHeader>
+ }
     return (
         
              <SVGPageHeader>

@@ -4,7 +4,7 @@ import React from "react";
 
 export const useFetch = (url:string,props?:any ) => {
     const [response, setResponse] = React.useState([]);
-    const [error, setError] = React.useState(null);
+    const [error, setError] = React.useState<any>(null);
     React.useEffect(() => {
       const fetchData = async () => {
        
@@ -16,8 +16,13 @@ export const useFetch = (url:string,props?:any ) => {
             headers: {'Content-Type':'application/json',},
           });
           const json = await res.json();
+          console.log('JSON',json)
+          if (json.status === 404){
+            setError(true);
+          }else{
+            setResponse(json.data);
+          }
           
-          setResponse(json.data);
         } catch (error) {
           setError(error);
         }
