@@ -13,6 +13,7 @@ const NavBar = () => {
         
         
         <SVGbackground>
+             
             <SearchBar marginBottom={100} />
             <RowDiv marginBottom={-250}>
             <Link to="/placestoeat" > <ButtonCards><DinnerIcon  /><p>Dinner</p></ButtonCards></Link>
