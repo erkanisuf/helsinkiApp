@@ -60,6 +60,7 @@ const Login: React.FC<Props> = ({ open }) => {
       })
       .catch((err) => {});
   };
+  console.log("");
   return (
     <LoginForm open={open}>
       <button onClick={test}>Test</button>
