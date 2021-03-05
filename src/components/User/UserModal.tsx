@@ -3,13 +3,19 @@ import Login from "./Login";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { LoginForm, Modal } from "../StyledComponents/Styles";
 import { Link } from "react-router-dom";
+import { Cookies } from "react-cookie";
 
 const UserModal = () => {
   const [open, setOpen] = useState(false);
+  const cookie = new Cookies();
   const ToggleModal = () => {
     console.log("click");
     setOpen(!open);
   };
+
+  if (cookie.get("loged_in")) {
+    return <div>U ARE INSIDE</div>;
+  }
   return (
     <div
       style={{

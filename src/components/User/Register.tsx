@@ -30,7 +30,7 @@ const Register = () => {
       })
         .then((el) => el.json())
         .then((el) => {
-          if (!el.IsSuccs) {
+          if (!el.isSuccs) {
             setError(el.errors);
             setSuccs("");
             console.log(el);

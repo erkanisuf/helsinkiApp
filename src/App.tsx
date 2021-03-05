@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Switch } from "react-router";
 import "./App.css";
 import IDPage from "./components/IDPage/IDPage";
@@ -10,21 +10,35 @@ import SVGPageHeader from "./components/StyledComponents/SVGbackground/SVGPageHe
 import Login from "./components/User/Login";
 import Register from "./components/User/Register";
 import FrontPage from "./FrontPage";
+import { Store } from "./Context/AppContext";
 
-function App() {
-  navigator.geolocation.getCurrentPosition(function (position) {
-    console.log(position);
-  });
+function App(): JSX.Element {
+  const { state, dispatch } = React.useContext(Store);
+  console.log(state);
 
-  function geoloc() {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      console.log(position);
-    });
-  }
+  // navigator.geolocation.getCurrentPosition(function (position) {
+  //   console.log(position);
+  // });
+
+  // function geoloc() {
+  //   navigator.geolocation.getCurrentPosition(function (position) {
+  //     console.log(position);
+  //   });
+  // }
 
   return (
     <div className="App">
-      {/* <button onClick={geoloc}>Location</button> */}
+      <button onClick={() => dispatch({ type: "LOG_IN", data: true })}>
+        INSIDE
+      </button>
+      <button onClick={() => dispatch({ type: "LOG_OUT", data: false })}>
+        OUTSIDE
+      </button>
+      <button
+        onClick={() => dispatch({ type: "TEST", data: false, testvalue: 12 })}
+      >
+        testvalue
+      </button>
 
       <Switch>
         <Route path="/events">
