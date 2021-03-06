@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Route, Switch } from "react-router";
 import "./App.css";
 import IDPage from "./components/IDPage/IDPage";
@@ -11,9 +11,10 @@ import Login from "./components/User/Login";
 import Register from "./components/User/Register";
 import FrontPage from "./FrontPage";
 import { Store } from "./Context/AppContext";
+import { Cookies } from "react-cookie";
 
 function App(): JSX.Element {
-  const { state, dispatch } = React.useContext(Store);
+  const { state, dispatch } = useContext(Store);
   console.log(state);
 
   // navigator.geolocation.getCurrentPosition(function (position) {
@@ -26,20 +27,44 @@ function App(): JSX.Element {
   //   });
   // }
 
+  //This Function Checks if there is Cookie in browser , if so fetches to server.
+  //In the server is made check if user cookie is still valid , if its its sends current user tokens .
+  // AFter that it dispatchs to main state and puts the current loged user name and changes status to is_logged_in:true , if invalid token to false;
+  const cookies = new Cookies();
+  const usercookie = cookies.get("loged_in");
+  useEffect(() => {
+    console.log(usercookie, "mycooki");
+    if (!usercookie) {
+      dispatch({ type: "LOG_OUT", is_loged_in: false });
+    } else {
+      fetch(`${process.env.REACT_APP_SERVER_URL}/api/user/GetUserByToken`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${usercookie}` },
+      })
+        .then((el) => {
+          if (el.status === 200) {
+            return el.json();
+          } else {
+            console.log("error , failed to fetch");
+          }
+        })
+        .then((el) => {
+          if (el.isSuccs) {
+            dispatch({
+              type: "LOG_IN",
+              is_loged_in: true,
+              loged_email: el.email,
+            });
+          } else {
+            dispatch({ type: "LOG_OUT", is_loged_in: false });
+          }
+        })
+        .catch((err) => console.log(err, "err"));
+    }
+  }, [usercookie]);
+
   return (
     <div className="App">
-      <button onClick={() => dispatch({ type: "LOG_IN", data: true })}>
-        INSIDE
-      </button>
-      <button onClick={() => dispatch({ type: "LOG_OUT", data: false })}>
-        OUTSIDE
-      </button>
-      <button
-        onClick={() => dispatch({ type: "TEST", data: false, testvalue: 12 })}
-      >
-        testvalue
-      </button>
-
       <Switch>
         <Route path="/events">
           <Page

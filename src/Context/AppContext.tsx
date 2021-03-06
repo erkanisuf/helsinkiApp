@@ -4,8 +4,8 @@ import { LoginReducer, Action, State } from "./Reducer";
 
 const initialState = {
   // Initial STATE
-  logged_in: false,
-  sex: "initl",
+  is_loged_in: true,
+  loged_email: "",
 };
 
 //create context

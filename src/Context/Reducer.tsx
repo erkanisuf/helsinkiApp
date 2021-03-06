@@ -1,26 +1,19 @@
-export type State = { logged_in: boolean | null };
-export type Action =
-  | {
-      type: "LOG_OUT" | "LOG_IN";
-      data: boolean | any;
-      testvalue?: number;
-    }
-  | {
-      type: "TEST";
-      data: boolean | any;
-      testvalue?: number;
-    };
+export type State = { is_loged_in: boolean | null; loged_email?: string };
+export type Action = {
+  type: "LOG_OUT" | "LOG_IN";
+  is_loged_in: boolean | any;
+  loged_email?: string;
+};
 
 const LogIn = (action: Action, state: State) => {
-  return { ...state, logged_in: action.data };
+  return {
+    ...state,
+    is_loged_in: action.is_loged_in,
+    loged_email: action.loged_email,
+  };
 };
 const LogOut = (action: Action, state: State) => {
-  return { ...state, logged_in: action.data };
-};
-
-const TEST = (action: Action, state: State) => {
-  console.log(action);
-  return { ...state, logged_in: action.data, testvalue: action.testvalue };
+  return { ...state, is_loged_in: action.is_loged_in, loged_email: "" };
 };
 
 export const LoginReducer = (state: State, action: Action) => {
@@ -29,8 +22,7 @@ export const LoginReducer = (state: State, action: Action) => {
       return LogIn(action, state);
     case "LOG_OUT":
       return LogOut(action, state);
-    case "TEST":
-      return TEST(action, state);
+
     default:
       return state;
   }

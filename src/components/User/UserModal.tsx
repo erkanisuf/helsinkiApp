@@ -3,18 +3,40 @@ import Login from "./Login";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { LoginForm, Modal } from "../StyledComponents/Styles";
 import { Link } from "react-router-dom";
+import { Store } from "../../Context/AppContext";
 import { Cookies } from "react-cookie";
-
 const UserModal = () => {
-  const [open, setOpen] = useState(false);
-  const cookie = new Cookies();
+  const { state, dispatch } = React.useContext(Store);
+  const [open, setOpen] = useState(false); // Opens Login Toggler on top Right
+  const cookies = new Cookies();
+
   const ToggleModal = () => {
-    console.log("click");
     setOpen(!open);
   };
 
-  if (cookie.get("loged_in")) {
-    return <div>U ARE INSIDE</div>;
+  const LogOut = () => {
+    cookies.remove("loged_in");
+    dispatch({ type: "LOG_OUT", is_loged_in: false });
+  };
+
+  if (state.is_loged_in) {
+    return (
+      <div
+        style={{
+          color: "white",
+          width: "80%",
+          position: "absolute",
+          top: 15,
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <span>Logged in as : {state.loged_email}</span>{" "}
+        <span onClick={LogOut} style={{ cursor: "Pointer" }}>
+          / Log Out
+        </span>
+      </div>
+    );
   }
   return (
     <div

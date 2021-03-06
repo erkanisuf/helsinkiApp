@@ -370,9 +370,11 @@ export const GridImageDiv = styled.div`
     }
   }
 `;
-
-// EVENTS GRID
-export const EventsGrid = styled.div`
+interface TextLength {
+  textlength: number;
+}
+// EVENTS GRID and ACtivities
+export const EventsGrid = styled.div<TextLength>`
   width: 80%;
   margin: 55px auto;
   display: grid;
@@ -393,6 +395,7 @@ export const EventsGrid = styled.div`
     flex-direction: column;
     background-color: white;
     margin: 15px auto;
+
     button {
       background-color: #0093e9;
       width: 300px;
@@ -412,9 +415,16 @@ export const EventsGrid = styled.div`
 
     h1 {
       margin: 15px auto;
-      padding: 15px;
-      font-size: 52px;
+      padding: 0px 50px;
+      // This one depending of text length puts font size
+      font-size: ${(props) =>
+        props.textlength > 30
+          ? "18px"
+          : props.textlength > 20
+          ? "35px"
+          : "55px"};
       width: 100%;
+
       border-bottom: 5px solid #0093e9;
     }
   }
@@ -473,6 +483,7 @@ export const EventsGrid = styled.div`
   //DESCRIPTIOn
   div:nth-of-type(6) {
     margin: 35px auto;
+
     box-shadow: 0px 0px 5px 0px #cecccc;
     background-color: white;
     padding: 10px;
