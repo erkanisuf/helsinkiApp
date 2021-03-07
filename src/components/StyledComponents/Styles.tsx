@@ -617,3 +617,35 @@ export const WrapperLoginAndRegister = styled.div`
     border: 1px solid #ccc;
   }
 `;
+
+// IMAge oN Open MOdal
+
+interface ImageModal {
+  open: boolean;
+}
+export const ImageModal = styled.div<ImageModal>`
+  visibility: none;
+  display: ${(props) => (props.open ? "flex" : "none")}!important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5222;
+  width: 100%;
+  height: 100vh;
+
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  background-color: ${"rgba(0, 0, 0, 0.7)"};
+  div {
+    background-color: #f8f8f8 !important;
+    padding: 5px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  img {
+    width: 80%;
+  }
+`;

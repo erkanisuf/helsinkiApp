@@ -90,7 +90,7 @@ function App(): JSX.Element {
             type={"allplaces"}
           />
         </Route>
-        <Route path="/allbyid/:id">
+        <Route path="/allbyid/:id/:id">
           <IDPage />
         </Route>
         <Route path="/login">
