@@ -638,14 +638,70 @@ export const ImageModal = styled.div<ImageModal>`
   margin: 0 auto;
   background-color: ${"rgba(0, 0, 0, 0.7)"};
   div {
-    background-color: #f8f8f8 !important;
     padding: 5px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width: 80%;
+    max-height: 100%;
+
+    button {
+      background-color: #0093e9;
+
+      width: 80px !important;
+      margin: 25px auto;
+      padding: 5px !important;
+      color: white;
+      font-family: "Open Sans", sans-serif;
+      text-transform: uppercase;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      &:hover {
+        background-color: #116596;
+      }
+    }
   }
+
   img {
-    width: 80%;
+    max-width: 100%;
+
+    max-height: 700px;
+  }
+`;
+
+// Reviews Styles
+export const FormColumnFlex = styled.form`
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  input[type="submit"] {
+    margin: 5px;
+    background-color: #0093e9;
+    align-self: flex-end;
+    width: 120px !important;
+    padding: 15px !important;
+    color: white;
+    font-family: "Open Sans", sans-serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    &:hover {
+      background-color: #116596;
+    }
+  }
+`;
+
+export const ReviewTextArea = styled.textarea`
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 15px;
+  &:focus {
+    outline: none;
   }
 `;

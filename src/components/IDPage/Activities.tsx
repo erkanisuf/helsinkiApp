@@ -1,6 +1,6 @@
-import React from "react";
-import { EventsGrid, Tags } from "../StyledComponents/Styles";
-
+import React, { useEffect, useRef, useState } from "react";
+import { EventsGrid, ImageModal, Tags } from "../StyledComponents/Styles";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 interface Props {
   data: {
     id: string;
@@ -36,6 +36,28 @@ interface Images {
 }
 
 const Activities: React.FC<Props> = ({ data }) => {
+  const ref = useRef<any>(null);
+  const [modalImage, setModalImage] = useState<string>();
+  const [open, setOpen] = useState<boolean>(false);
+  const handleClickOutside = (event: any) => {
+    // LATER!!:Check TypeScript for useRef
+    if (event.target === ref.current) {
+      CloseImageModal(); // This If you click on Modal the Black places it will close the Modal !
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true); // ON CLick checks if clicked on Balack(modal ) ,if so it closes  ,if clicked on white or on pic doesnt
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, []);
+  const OpenImageModal = (e: string) => {
+    setModalImage(e);
+    setOpen(true);
+  };
+  const CloseImageModal = () => {
+    setOpen(false);
+  };
   return (
     <EventsGrid textlength={data.name.fi.length}>
       {/* TextLenght Puts font size depending of text length */}
@@ -102,13 +124,21 @@ const Activities: React.FC<Props> = ({ data }) => {
       <div style={{ width: 300 }}>
         {data.description.images?.map((el, index) => {
           return (
-            <div key={index}>
+            <div key={index} onClick={() => OpenImageModal(el.url)}>
               <img src={el.url} alt={el.license_type.name} />
               <p>{el.copyright_holder}</p>{" "}
             </div>
           );
         })}
       </div>
+      <ImageModal open={open} id="imgModal" ref={ref}>
+        <div>
+          <button onClick={CloseImageModal}>
+            <AiOutlineCloseCircle size="45px" />
+          </button>
+          <img src={modalImage} alt={""} />
+        </div>
+      </ImageModal>
     </EventsGrid>
   );
 };

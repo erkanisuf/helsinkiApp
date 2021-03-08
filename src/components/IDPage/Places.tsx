@@ -7,6 +7,8 @@ import {
   Tags,
 } from "../StyledComponents/Styles";
 import noImage from "../../staticimages/No_Image_Available.jpg";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import PostReview from "../Reviews/PostReview";
 
 interface Props {
   data: {
@@ -75,7 +77,7 @@ const Places: React.FC<Props> = ({ data }) => {
     }
   };
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside, true); // ON CLick checks the modal
+    document.addEventListener("click", handleClickOutside, true); // ON CLick checks if clicked on Balack(modal ) ,if so it closes  ,if clicked on white or on pic doesnt
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
@@ -179,10 +181,16 @@ const Places: React.FC<Props> = ({ data }) => {
       </GridImageDiv>
       <ImageModal open={open} id="imgModal" ref={ref}>
         <div>
-          <button onClick={CloseImageModal}>Close</button>
+          <button onClick={CloseImageModal}>
+            {" "}
+            <AiOutlineCloseCircle size="45px" />
+          </button>
           <img src={modalImage} alt={""} />
         </div>
       </ImageModal>
+      <div style={{ gridColumn: "1/4" }}>
+        <PostReview />
+      </div>
     </GridPage>
   );
 };
