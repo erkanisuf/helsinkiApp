@@ -32,14 +32,18 @@ const Login: React.FC<Props> = ({ open }) => {
       body: JSON.stringify(loginUser),
       headers: { "Content-Type": "application/json" },
     })
-      .then((el) => el.json())
       .then((el) => {
+        return el.json();
+      })
+
+      .then((el: any) => {
+        console.log(el);
         if (!el.isSuccs) {
           setError(el.errors);
           setSuccs("");
           console.log(el);
         } else {
-          const date = new Date(new Date().getTime() + 1 * 60 * 1000); // Expires in 1 minute (change 1 if want more),in backend is diffrent for now CHANGE LATER!
+          const date = new Date(new Date().getTime() + 60 * 60 * 1000); // Expires in 1 minute (change 1 if want more),in backend is diffrent for now CHANGE LATER!
           console.log(typeof date);
           console.log(el);
           setCookie("loged_in", el.token, {
@@ -59,7 +63,7 @@ const Login: React.FC<Props> = ({ open }) => {
       .catch((err) => {
         console.log(err);
         setSuccs("");
-        setError(["Something went wrong please refresh and try again !"]);
+        setError(["Error , please try again"]);
       });
   };
 

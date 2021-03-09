@@ -4,7 +4,7 @@ import { LoginReducer, Action, State } from "./Reducer";
 
 const initialState = {
   // Initial STATE
-  is_loged_in: true,
+  is_loged_in: false,
   loged_email: "",
 };
 

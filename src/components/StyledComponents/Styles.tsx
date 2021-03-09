@@ -694,6 +694,10 @@ export const FormColumnFlex = styled.form`
     &:hover {
       background-color: #116596;
     }
+    &:disabled {
+      background-color: grey;
+      cursor: initial;
+    }
   }
 `;
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { EventsGrid, ImageModal, Tags } from "../StyledComponents/Styles";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import PostReview from "../Reviews/PostReview";
 interface Props {
   data: {
     id: string;
@@ -139,6 +140,9 @@ const Activities: React.FC<Props> = ({ data }) => {
           <img src={modalImage} alt={""} />
         </div>
       </ImageModal>
+      <div style={{ gridColumn: "1/4" }}>
+        <PostReview id={data.id} />
+      </div>
     </EventsGrid>
   );
 };

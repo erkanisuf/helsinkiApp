@@ -189,7 +189,7 @@ const Places: React.FC<Props> = ({ data }) => {
         </div>
       </ImageModal>
       <div style={{ gridColumn: "1/4" }}>
-        <PostReview />
+        <PostReview id={data.id} />
       </div>
     </GridPage>
   );

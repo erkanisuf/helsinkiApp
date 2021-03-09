@@ -1,6 +1,7 @@
 import React from "react";
 import { EventsGrid, Tags } from "../StyledComponents/Styles";
 import moment from "moment";
+import PostReview from "../Reviews/PostReview";
 interface Props {
   data: {
     id: string;
@@ -89,6 +90,9 @@ const Events: React.FC<Props> = ({ data }) => {
         <h1>Description</h1>
         <div dangerouslySetInnerHTML={{ __html: data.description.body }} />
         {/* Event Dates */}
+      </div>
+      <div style={{ gridColumn: "1/4" }}>
+        <PostReview id={data.id} />
       </div>
     </EventsGrid>
   );

@@ -4,18 +4,19 @@ import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { LoginForm, Modal } from "../StyledComponents/Styles";
 import { Link } from "react-router-dom";
 import { Store } from "../../Context/AppContext";
-import { Cookies } from "react-cookie";
+import { useCookies } from "react-cookie";
 const UserModal = () => {
   const { state, dispatch } = React.useContext(Store);
   const [open, setOpen] = useState(false); // Opens Login Toggler on top Right
-  const cookies = new Cookies();
+  const [cookies, removeCookie, setCookie] = useCookies([]);
 
   const ToggleModal = () => {
     setOpen(!open);
   };
 
   const LogOut = () => {
-    cookies.remove("loged_in");
+    document.cookie =
+      "loged_in=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     dispatch({ type: "LOG_OUT", is_loged_in: false });
   };
 

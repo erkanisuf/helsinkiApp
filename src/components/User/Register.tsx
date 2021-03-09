@@ -28,7 +28,9 @@ const Register = () => {
         body: JSON.stringify(newuser),
         headers: { "Content-Type": "application/json" },
       })
-        .then((el) => el.json())
+        .then((el) => {
+          return el.json();
+        })
         .then((el) => {
           if (!el.isSuccs) {
             setError(el.errors);
