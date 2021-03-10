@@ -6,6 +6,10 @@ const initialState = {
   // Initial STATE
   is_loged_in: false,
   loged_email: "",
+  location: {
+    longitude: 0,
+    latitude: 0,
+  },
 };
 
 //create context

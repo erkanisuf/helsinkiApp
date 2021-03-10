@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ItemsCard } from "../Styles";
 import noImage from "../../../staticimages/No_Image_Available.jpg";
 import { getDistance } from "geolib"; // For Distance LIbary
 import { Link } from "react-router-dom";
 import { FaGrinStars } from "react-icons/fa";
+import { MdGpsOff } from "react-icons/md";
+import { Store } from "../../../Context/AppContext";
+
 interface Props {
   type: string;
   data: {
@@ -31,14 +34,30 @@ interface ReviewDataObject {
   writtenBy: string;
   createdDate: string;
 }
+interface LocationInterface {
+  longitude: number;
+  latitude: number;
+}
 const ItemCard: React.FC<Props> = ({ type, data }) => {
-  const myDistance = getDistance(
-    { latitude: 60.17626, longitude: 24.938082 }, // my position this is just dummy data
-    { latitude: data.location.lat, longitude: data.location.lon } // restourant position
-  );
+  const { state, dispatch } = useContext(Store);
 
   const [reviews, setReviews] = useState<ReviewDataObject[]>([]);
-
+  const [mylocation, setMyLocation] = useState<LocationInterface>({
+    latitude: 0,
+    longitude: 0,
+  });
+  const myDistance = getDistance(
+    mylocation, // my position this is just dummy data
+    { latitude: data.location.lat, longitude: data.location.lon } // restourant position
+  );
+  useEffect(() => {
+    if (state.location) {
+      setMyLocation(state.location);
+    } else {
+      setMyLocation({ latitude: 0, longitude: 0 });
+    }
+    return () => {};
+  }, []);
   useEffect(() => {
     fetch(
       `${process.env.REACT_APP_SERVER_URL}/api/reviews/GetReviews/${data.id}`,
@@ -106,7 +125,35 @@ const ItemCard: React.FC<Props> = ({ type, data }) => {
             }}
           ></div>
           <p>{data.name.en ? data.name.en : data.name.fi}</p>
-          <div> {(myDistance / 1000).toFixed(1)}km</div>
+          <div
+            style={{
+              borderTop: "1px solid #ccc",
+              borderRadius: "0px",
+              display: "flex",
+              justifyContent: "space-between",
+              width: "80%",
+              margin: "0 auto",
+              color: "#999898",
+              fontFamily: "Open-sans,sans-serif",
+            }}
+          >
+            {" "}
+            <span>
+              {reviews.length ? (
+                arrAvg(reviews).toFixed(1)
+              ) : (
+                <span style={{ fontSize: "10px" }}>not rated</span>
+              )}{" "}
+              <FaGrinStars color="#999898" />
+            </span>
+            {!mylocation.latitude && !mylocation.longitude ? (
+              <span>
+                <MdGpsOff />
+              </span>
+            ) : (
+              <span>{(myDistance / 1000).toFixed(1)}km</span>
+            )}
+          </div>
         </ItemsCard>
       </Link>
     );
@@ -133,7 +180,16 @@ const ItemCard: React.FC<Props> = ({ type, data }) => {
               }")`,
             }}
           ></div>
-          <p>{data.name.en}</p>
+          <p
+            style={{
+              overflow: "hidden",
+              width: "80%",
+              margin: "10px auto",
+              height: "40px",
+            }}
+          >
+            {data.name.en}
+          </p>
 
           <div
             style={{
@@ -149,10 +205,20 @@ const ItemCard: React.FC<Props> = ({ type, data }) => {
           >
             {" "}
             <span>
-              {reviews.length ? arrAvg(reviews).toFixed(1) : "unrated"}{" "}
+              {reviews.length ? (
+                arrAvg(reviews).toFixed(1)
+              ) : (
+                <span style={{ fontSize: "10px" }}>not rated</span>
+              )}{" "}
               <FaGrinStars color="#999898" />
             </span>
-            <span>{(myDistance / 1000).toFixed(1)}km</span>
+            {!mylocation.latitude && !mylocation.longitude ? (
+              <span>
+                <MdGpsOff />
+              </span>
+            ) : (
+              <span>{(myDistance / 1000).toFixed(1)}km</span>
+            )}
           </div>
         </ItemsCard>
       </Link>

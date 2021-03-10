@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useFetch } from "../../Hook/useFetch";
-
-import { Link, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import ItemCard from "../StyledComponents/ItemCard/ItemCard";
 import SearchBar from "../StyledComponents/SearchBar/SearchBar";
 import {
@@ -17,7 +17,6 @@ import PrevIcon from "../StyledComponents/SvgIcons/PrevIcon";
 
 interface Props {
   link: string;
-  type: string;
 }
 
 type Language = {
@@ -38,8 +37,13 @@ interface Imageobj {
 type Images = {
   images: Imageobj[];
 };
+type Param = {
+  id: string;
+};
 
-const Page: React.FC<Props> = ({ link, type }) => {
+const Nearby: React.FC<Props> = ({ link }) => {
+  const param = useParams<Param>();
+  console.log(param);
   const location = useLocation(); // Router React - using location to refetch in case path changes.
   const allItems = useFetch(link, location.pathname);
   console.log(allItems);
@@ -54,15 +58,18 @@ const Page: React.FC<Props> = ({ link, type }) => {
 
   // Pagination Post Request to backend
   const FetchMoreItems = (value: number) => {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/pagingFetch`, {
-      method: "POST",
-      body: JSON.stringify({
-        limit: limit,
-        start: value,
-        typeplace: type,
-      }),
-      headers: { "Content-Type": "application/json" },
-    })
+    fetch(
+      `${process.env.REACT_APP_SERVER_URL}/api/Routs/NearbyFetchPagination`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          limit: limit,
+          start: value,
+          typeplace: param.id,
+        }),
+        headers: { "Content-Type": "application/json" },
+      }
+    )
       .then((res) => res.json())
       .then((result) => {
         setData(result.data);
@@ -89,7 +96,9 @@ const Page: React.FC<Props> = ({ link, type }) => {
   if (error || allItems.error) {
     return (
       <SVGPageHeader>
-        <h1 style={{ color: "red" }}>Something went wrong please refresh.</h1>
+        <h1 style={{ color: "red" }}>
+          Something went wrong please refresh.{param.id}
+        </h1>
       </SVGPageHeader>
     );
   } else if (!data.length) {
@@ -103,7 +112,6 @@ const Page: React.FC<Props> = ({ link, type }) => {
   }
   return (
     <SVGPageHeader>
-      <Link to={`/nearby/${type}`}>Nearby</Link>
       <PageContainer>
         {data
           .sort((a: Data, b: Data) => {
@@ -112,7 +120,7 @@ const Page: React.FC<Props> = ({ link, type }) => {
             return b.description.images.length - a.description.images.length; // Sorts Items first by image avaibility
           })
           .map((el, index) => {
-            return <ItemCard key={index} type={type} data={el} />;
+            return <ItemCard key={index} type={param.id} data={el} />;
           })}
       </PageContainer>
       <div
@@ -133,4 +141,4 @@ const Page: React.FC<Props> = ({ link, type }) => {
   );
 };
 
-export default Page;
+export default Nearby;

@@ -12,21 +12,27 @@ import Register from "./components/User/Register";
 import FrontPage from "./FrontPage";
 import { Store } from "./Context/AppContext";
 import { Cookies } from "react-cookie";
+import Nearby from "./components/Pages/Nearby";
 
 function App(): JSX.Element {
   const { state, dispatch } = useContext(Store);
   console.log(state);
+  function geoloc() {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      dispatch({
+        type: "GET_LOCATION",
+        location: {
+          longitude: position.coords.longitude,
+          latitude: position.coords.latitude,
+        },
+      });
+    });
+  }
 
-  // navigator.geolocation.getCurrentPosition(function (position) {
-  //   console.log(position);
-  // });
-
-  // function geoloc() {
-  //   navigator.geolocation.getCurrentPosition(function (position) {
-  //     console.log(position);
-  //   });
-  // }
-
+  useEffect(() => {
+    geoloc();
+    return () => {};
+  }, []);
   //This Function Checks if there is Cookie in browser , if so fetches to server.
   //In the server is made check if user cookie is still valid , if its its sends current user tokens .
   // AFter that it dispatchs to main state and puts the current loged user name and changes status to is_logged_in:true , if invalid token to false;
@@ -88,6 +94,11 @@ function App(): JSX.Element {
           <Page
             link={`${process.env.REACT_APP_SERVER_URL}/api/Routs/allPlaces`}
             type={"allplaces"}
+          />
+        </Route>
+        <Route path="/nearby/:id/">
+          <Nearby
+            link={`${process.env.REACT_APP_SERVER_URL}/api/Routs/NearbyPlaces`}
           />
         </Route>
         <Route path="/allbyid/:id/:id">

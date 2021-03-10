@@ -105,7 +105,7 @@ export const ItemsCard = styled.div`
   color: #2e2d2d;
   align-content: center;
   align-items: center;
-  width: 250px;
+  width: 300px;
   background-color: white;
   height: 250px;
   box-shadow: 1px 1px 5px 0px #adadad;
