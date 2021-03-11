@@ -78,7 +78,7 @@ function App(): JSX.Element {
             type={"events"}
           />
         </Route>
-        <Route path="/placestoeat">
+        <Route path="/placetoeat">
           <Page
             link={`${process.env.REACT_APP_SERVER_URL}/api/Routs/allPlacesToEat`}
             type={"placetoeat"}
@@ -97,9 +97,7 @@ function App(): JSX.Element {
           />
         </Route>
         <Route path="/nearby/:id/">
-          <Nearby
-            link={`${process.env.REACT_APP_SERVER_URL}/api/Routs/NearbyPlaces`}
-          />
+          <Nearby />
         </Route>
         <Route path="/allbyid/:id/:id">
           <IDPage />

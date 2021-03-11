@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { LoginForm, WrapperLoginAndRegister } from "../StyledComponents/Styles";
 import SVGPageHeader from "../StyledComponents/SVGbackground/SVGPageHeader";
 
@@ -103,7 +104,12 @@ const Register = () => {
               })}
           </div>
           <div style={{ color: "green" }}>
-            {succs && <p>Email: {succs} succsessfuly registered !</p>}
+            {succs && (
+              <p>
+                Email: {succs} succsessfuly registered !{" "}
+                <Link to="/login">Click here</Link> to login
+              </p>
+            )}
           </div>
         </form>
       </LoginForm>

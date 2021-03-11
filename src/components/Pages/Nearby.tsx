@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useFetch } from "../../Hook/useFetch";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import ItemCard from "../StyledComponents/ItemCard/ItemCard";
 import SearchBar from "../StyledComponents/SearchBar/SearchBar";
 import {
+  Button,
   NextPrevbtn,
   PageContainer,
   SvgContainer,
@@ -15,9 +16,10 @@ import LoadingIcon from "../StyledComponents/SvgIcons/LoadingIcon";
 import NextIcon from "../StyledComponents/SvgIcons/NextIcon";
 import PrevIcon from "../StyledComponents/SvgIcons/PrevIcon";
 
-interface Props {
-  link: string;
-}
+import { IoArrowBackCircleSharp } from "react-icons/io5";
+import { Store } from "../../Context/AppContext";
+
+interface Props {}
 
 type Language = {
   en: string;
@@ -30,6 +32,7 @@ type Data = {
   description: Images;
   length: number;
   location: { lat: number; lon: number };
+  event_dates: { starting_day: string };
 };
 interface Imageobj {
   url: string;
@@ -41,20 +44,46 @@ type Param = {
   id: string;
 };
 
-const Nearby: React.FC<Props> = ({ link }) => {
+const Nearby: React.FC<Props> = () => {
+  const { state, dispatch } = useContext(Store);
   const param = useParams<Param>();
-  console.log(param);
   const location = useLocation(); // Router React - using location to refetch in case path changes.
-  const allItems = useFetch(link, location.pathname);
-  console.log(allItems);
-  const [data, setData] = useState<Data[]>(allItems.data);
+
+  const [data, setData] = useState<Data[]>([]);
   const [limit, setLimit] = useState<number>(20); // How many items per page
   const [start, setStart] = useState<number>(0); // From where in the Api to start
   const [error, setError] = useState<boolean>(false);
+
+  // THIS: first useEffect fetches by Distance and sets the Data (backend checks what type of elemetn is e.g place,dinner ,event etc. .. and then sends us data.
+  //Note: Location is string in the backend ,even tho its as numbers in the frontend.)
   useEffect(() => {
+    const abortCont = new AbortController();
     setStart(0); // sets pagination back to 0 in case we change url path
-    setData(allItems.data);
-  }, [location.pathname, allItems.data]);
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/Routs/Nearby`, {
+      method: "POST",
+      body: JSON.stringify({
+        latitude: state.location?.latitude.toString(),
+        longitude: state.location?.longitude.toString(),
+        typeplace: param.id,
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res, "res2");
+        setData(res.data);
+      })
+      .catch((err) => {
+        if (err.name === "AbortError") {
+          console.log("err ABORT");
+        } else {
+          setError(true);
+        }
+      });
+    return () => {
+      abortCont.abort();
+    };
+  }, [location.pathname, state.location]);
 
   // Pagination Post Request to backend
   const FetchMoreItems = (value: number) => {
@@ -66,6 +95,8 @@ const Nearby: React.FC<Props> = ({ link }) => {
           limit: limit,
           start: value,
           typeplace: param.id,
+          latitude: state.location?.latitude.toString(),
+          longitude: state.location?.longitude.toString(),
         }),
         headers: { "Content-Type": "application/json" },
       }
@@ -93,7 +124,7 @@ const Nearby: React.FC<Props> = ({ link }) => {
     }
   };
 
-  if (error || allItems.error) {
+  if (error) {
     return (
       <SVGPageHeader>
         <h1 style={{ color: "red" }}>
@@ -112,6 +143,28 @@ const Nearby: React.FC<Props> = ({ link }) => {
   }
   return (
     <SVGPageHeader>
+      <div
+        style={{
+          width: "70%",
+          margin: "0 auto",
+          borderBottom: "1px solid #ccc",
+          padding: "10px",
+          display: "flex",
+          alignItems: "flex-start",
+        }}
+      >
+        <Link
+          to={`/${param.id}`}
+          style={{ cursor: "pointer", textDecoration: "none" }}
+        >
+          {" "}
+          <Button>
+            {" "}
+            <IoArrowBackCircleSharp style={{ fontSize: "25px" }} />
+            Back to /{param.id}
+          </Button>
+        </Link>
+      </div>
       <PageContainer>
         {data
           .sort((a: Data, b: Data) => {

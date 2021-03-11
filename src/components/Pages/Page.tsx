@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useFetch } from "../../Hook/useFetch";
 
 import { Link, useLocation, useParams } from "react-router-dom";
 import ItemCard from "../StyledComponents/ItemCard/ItemCard";
 import SearchBar from "../StyledComponents/SearchBar/SearchBar";
 import {
+  Button,
   NextPrevbtn,
   PageContainer,
   SvgContainer,
@@ -14,6 +15,8 @@ import SVGPageHeader from "../StyledComponents/SVGbackground/SVGPageHeader";
 import LoadingIcon from "../StyledComponents/SvgIcons/LoadingIcon";
 import NextIcon from "../StyledComponents/SvgIcons/NextIcon";
 import PrevIcon from "../StyledComponents/SvgIcons/PrevIcon";
+import { MdGpsFixed } from "react-icons/md";
+import { Store } from "../../Context/AppContext";
 
 interface Props {
   link: string;
@@ -31,6 +34,7 @@ type Data = {
   description: Images;
   length: number;
   location: { lat: number; lon: number };
+  event_dates: { starting_day: string };
 };
 interface Imageobj {
   url: string;
@@ -40,6 +44,7 @@ type Images = {
 };
 
 const Page: React.FC<Props> = ({ link, type }) => {
+  const { state, dispatch } = useContext(Store);
   const location = useLocation(); // Router React - using location to refetch in case path changes.
   const allItems = useFetch(link, location.pathname);
   console.log(allItems);
@@ -48,8 +53,11 @@ const Page: React.FC<Props> = ({ link, type }) => {
   const [start, setStart] = useState<number>(0); // From where in the Api to start
   const [error, setError] = useState<boolean>(false);
   useEffect(() => {
+    const abortCont = new AbortController();
+    setError(false);
     setStart(0); // sets pagination back to 0 in case we change url path
     setData(allItems.data);
+    return () => abortCont.abort();
   }, [location.pathname, allItems.data]);
 
   // Pagination Post Request to backend
@@ -63,9 +71,17 @@ const Page: React.FC<Props> = ({ link, type }) => {
       }),
       headers: { "Content-Type": "application/json" },
     })
-      .then((res) => res.json())
-      .then((result) => {
-        setData(result.data);
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          setError(true);
+        }
+      })
+      .then((result: any) => {
+        if (result.data) {
+          setData(result.data);
+        }
       })
       .catch((err) => setError(true));
   };
@@ -103,7 +119,28 @@ const Page: React.FC<Props> = ({ link, type }) => {
   }
   return (
     <SVGPageHeader>
-      <Link to={`/nearby/${type}`}>Nearby</Link>
+      <div
+        style={{
+          width: "70%",
+          margin: "0 auto",
+          borderBottom: "1px solid #ccc",
+          padding: "10px",
+          display: "flex",
+          alignItems: "flex-start",
+        }}
+      >
+        <Link
+          to={`/nearby/${type}`}
+          style={{ cursor: "pointer", textDecoration: "none" }}
+        >
+          {" "}
+          <Button disabled={!state.location?.latitude ? true : false}>
+            {" "}
+            <MdGpsFixed style={{ fontSize: "25px" }} />
+            {!state.location?.latitude ? "Location Turned off" : "Closes to me"}
+          </Button>
+        </Link>
+      </div>
       <PageContainer>
         {data
           .sort((a: Data, b: Data) => {

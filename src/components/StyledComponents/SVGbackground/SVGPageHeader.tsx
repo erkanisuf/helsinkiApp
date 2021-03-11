@@ -18,7 +18,7 @@ const SVGPageHeader: React.FunctionComponent<MyProps> = (props) => {
         <SearchBar marginBottom={0} />
 
         <PagesNav>
-          <Link to="/placestoeat"> Places to eat</Link>
+          <Link to="/placetoeat"> Places to eat</Link>
           <Link to="/activities">Activities</Link>
           <Link to="/events">Events</Link>
           <Link to="/allplaces"> Places</Link>

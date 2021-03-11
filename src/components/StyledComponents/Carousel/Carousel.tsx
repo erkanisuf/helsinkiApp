@@ -11,6 +11,7 @@ interface Props {
     id: string;
     description: Images;
     location: { lat: number; lon: number };
+    event_dates: { starting_day: string };
   }[];
 }
 

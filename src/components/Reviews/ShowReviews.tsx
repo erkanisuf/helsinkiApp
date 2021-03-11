@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaGrinStars } from "react-icons/fa";
+import { SiZeromq } from "react-icons/si";
+
 import StarRatingComponent from "react-star-rating-component";
 import moment from "moment";
 interface Props {
@@ -44,7 +46,14 @@ const ShowReviews: React.FC<Props> = ({ id, succs }) => {
   }, [id, succs]);
 
   if (!reviews.length) {
-    return <div>No reviews added yet!</div>;
+    return (
+      <div>
+        <span>
+          <SiZeromq style={{ fontSize: "35px", color: "#9b9898" }} />
+        </span>
+        No reviews added yet!
+      </div>
+    );
   } else
     return (
       <div

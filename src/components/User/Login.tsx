@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import {
   LoginForm,
   Modal,
+  SvgContainer,
   WrapperLoginAndRegister,
 } from "../StyledComponents/Styles";
 import { useCookies } from "react-cookie";
 import { Store } from "../../Context/AppContext";
+import LoadingIcon from "../StyledComponents/SvgIcons/LoadingIcon";
 
 interface Props {
   open: boolean;
@@ -18,6 +20,7 @@ const Login: React.FC<Props> = ({ open }) => {
   });
   const [error, setError] = useState<string[]>([]);
   const [succs, setSuccs] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const [cookies, setCookie] = useCookies([]);
 
   const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +29,7 @@ const Login: React.FC<Props> = ({ open }) => {
 
   const LogIn = (e: React.FormEvent): void => {
     e.preventDefault();
-
+    setLoading(true);
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/user/login`, {
       method: "POST",
       body: JSON.stringify(loginUser),
@@ -58,12 +61,14 @@ const Login: React.FC<Props> = ({ open }) => {
             is_loged_in: true,
             loged_email: el.email,
           });
+          setLoading(false);
         }
       })
       .catch((err) => {
         console.log(err);
         setSuccs("");
         setError(["Error , please try again"]);
+        setLoading(false);
       });
   };
 
@@ -92,6 +97,12 @@ const Login: React.FC<Props> = ({ open }) => {
           />
         </label>
         <input type="submit" value="Sign in" />
+        {}
+        {loading && (
+          <SvgContainer width={50} height={60} style={{ margin: "0 auto" }}>
+            <LoadingIcon />
+          </SvgContainer>
+        )}
         <p>Forgot password?</p>
         <div style={{ color: "red" }}>
           {error &&

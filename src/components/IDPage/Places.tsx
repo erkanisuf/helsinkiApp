@@ -188,7 +188,13 @@ const Places: React.FC<Props> = ({ data }) => {
           <img src={modalImage} alt={""} />
         </div>
       </ImageModal>
-      <div style={{ gridColumn: "1/4" }}>
+      <div
+        style={{
+          gridColumn: "1/4",
+          borderTop: "1px solid #ccc",
+          paddingTop: "15px",
+        }}
+      >
         <PostReview id={data.id} />
       </div>
     </GridPage>

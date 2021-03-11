@@ -2,12 +2,33 @@ import styled from "styled-components";
 
 const defaultMargin: number = 0;
 export const Button = styled.button`
-  background: palevioletred;
-  width: 150px;
+  background: #3590c5;
+  width: 200px;
   height: 50px;
   border-radius: 3px;
   border: none;
+  cursor: pointer;
   color: white;
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-around;
+  text-decoration: none;
+  align-items: center;
+  &:hover {
+    background: #ffffff;
+    border: 1px solid #3590c5;
+    color: #3590c5;
+  }
+  &:disabled {
+    background: #e4e3e3;
+    cursor: default;
+    color: #5e5d5d;
+    &:hover {
+      border: none;
+    }
+  }
 `;
 export const ButtonCards = styled.div`
   display: "flex";

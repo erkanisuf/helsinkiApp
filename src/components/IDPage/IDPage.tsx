@@ -48,45 +48,52 @@ const IDPage = () => {
   const history = useHistory();
 
   useEffect(() => {
+    const abortCont = new AbortController();
     // This is in case the link is copy pasted to new browser tab. Because it gives error this statment fixes the issue. The first Main If statment runs only when
     //LInk is copyu pasted to new browser thab , the second statment(else) runs in normal situation!
     if (!state) {
       console.log(id, "location");
       if (location.pathname.includes("placetoeat" || "allplaces")) {
         FetchById(
-          `${process.env.REACT_APP_SERVER_URL}/api/Routs/PlacebyID/${id}`
+          `${process.env.REACT_APP_SERVER_URL}/api/Routs/PlacebyID/${id}`,
+          abortCont.signal
         );
       } else if (location.pathname.includes("events")) {
         FetchById(
-          `${process.env.REACT_APP_SERVER_URL}/api/Routs/eventID/${id}`
+          `${process.env.REACT_APP_SERVER_URL}/api/Routs/eventID/${id}`,
+          abortCont.signal
         );
       } else if (location.pathname.includes("activities")) {
         FetchById(
-          `${process.env.REACT_APP_SERVER_URL}/api/Routs/activitybyID/${id}`
+          `${process.env.REACT_APP_SERVER_URL}/api/Routs/activitybyID/${id}`,
+          abortCont.signal
         );
       }
     } else {
       if (state.type === "allplaces" || state.type === "placetoeat") {
         FetchById(
-          `${process.env.REACT_APP_SERVER_URL}/api/Routs/PlacebyID/${state.id}`
+          `${process.env.REACT_APP_SERVER_URL}/api/Routs/PlacebyID/${state.id}`,
+          abortCont.signal
         );
       } else if (state.type === "events") {
         FetchById(
-          `${process.env.REACT_APP_SERVER_URL}/api/Routs/eventID/${state.id}`
+          `${process.env.REACT_APP_SERVER_URL}/api/Routs/eventID/${state.id}`,
+          abortCont.signal
         );
       } else if (state.type === "activities") {
         FetchById(
-          `${process.env.REACT_APP_SERVER_URL}/api/Routs/activitybyID/${state.id}`
+          `${process.env.REACT_APP_SERVER_URL}/api/Routs/activitybyID/${state.id}`,
+          abortCont.signal
         );
       }
     }
 
-    return () => {};
+    return () => abortCont.abort();
   }, [location.pathname]);
 
   //Fetchs by ID
-  const FetchById = (url: string) => {
-    fetch(url)
+  const FetchById = (url: string, abort: any) => {
+    fetch(url, { signal: abort })
       .then((el) => {
         return el.json();
       })
@@ -99,8 +106,11 @@ const IDPage = () => {
       })
 
       .catch((err) => {
-        console.log(err);
-        setError(true);
+        if (err.name === "AbortError") {
+          console.log("err ABORT");
+        } else {
+          setError(true);
+        }
       });
   };
 

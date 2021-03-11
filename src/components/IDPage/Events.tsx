@@ -91,7 +91,13 @@ const Events: React.FC<Props> = ({ data }) => {
         <div dangerouslySetInnerHTML={{ __html: data.description.body }} />
         {/* Event Dates */}
       </div>
-      <div style={{ gridColumn: "1/4" }}>
+      <div
+        style={{
+          gridColumn: "1/4",
+          borderTop: "1px solid #ccc",
+          paddingTop: "15px",
+        }}
+      >
         <PostReview id={data.id} />
       </div>
     </EventsGrid>

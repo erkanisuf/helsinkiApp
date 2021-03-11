@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { FaGrinStars } from "react-icons/fa";
 import { MdGpsOff } from "react-icons/md";
 import { Store } from "../../../Context/AppContext";
+import moment from "moment";
 
 interface Props {
   type: string;
@@ -14,6 +15,7 @@ interface Props {
     id: string;
     description: Images;
     location: { lat: number; lon: number };
+    event_dates: { starting_day: string };
   };
 }
 
@@ -59,11 +61,12 @@ const ItemCard: React.FC<Props> = ({ type, data }) => {
     return () => {};
   }, []);
   useEffect(() => {
+    const abortCont = new AbortController();
     fetch(
       `${process.env.REACT_APP_SERVER_URL}/api/reviews/GetReviews/${data.id}`,
       {
         method: "GET",
-
+        signal: abortCont.signal,
         headers: {
           "Content-Type": "application/json",
         },
@@ -85,7 +88,9 @@ const ItemCard: React.FC<Props> = ({ type, data }) => {
       })
       .catch((err) => console.log(err));
 
-    return () => {};
+    return () => {
+      abortCont.abort();
+    };
   }, [data.id]);
 
   // Calculates AVG Rating value (a is Accumulator ,let it stay there , when its a.key doesnt work , JS https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce )
@@ -125,6 +130,13 @@ const ItemCard: React.FC<Props> = ({ type, data }) => {
             }}
           ></div>
           <p>{data.name.en ? data.name.en : data.name.fi}</p>
+          <p style={{ fontSize: "12px", color: "#727272" }}>
+            {moment(
+              data.event_dates
+                ? data.event_dates.starting_day
+                : "No Info starting day"
+            ).format("MMMM Do YYYY, h:mm:ss a")}
+          </p>
           <div
             style={{
               borderTop: "1px solid #ccc",
