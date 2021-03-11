@@ -13,6 +13,7 @@ import FrontPage from "./FrontPage";
 import { Store } from "./Context/AppContext";
 import { Cookies } from "react-cookie";
 import Nearby from "./components/Pages/Nearby";
+import MapsAPI from "./components/MapsAPI/MapsAPI";
 
 function App(): JSX.Element {
   const { state, dispatch } = useContext(Store);

@@ -46,13 +46,13 @@ const IDPage = () => {
   const [data, setData] = useState<IDdata | any>();
   const [error, setError] = useState<boolean>(false);
   const history = useHistory();
-
+  console.log(id, "location");
   useEffect(() => {
     const abortCont = new AbortController();
+
     // This is in case the link is copy pasted to new browser tab. Because it gives error this statment fixes the issue. The first Main If statment runs only when
     //LInk is copyu pasted to new browser thab , the second statment(else) runs in normal situation!
     if (!state) {
-      console.log(id, "location");
       if (location.pathname.includes("placetoeat" || "allplaces")) {
         FetchById(
           `${process.env.REACT_APP_SERVER_URL}/api/Routs/PlacebyID/${id}`,

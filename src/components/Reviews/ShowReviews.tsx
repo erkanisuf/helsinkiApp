@@ -35,7 +35,6 @@ const ShowReviews: React.FC<Props> = ({ id, succs }) => {
       })
       .then((el) => {
         if (el.isSuccs) {
-          console.log(el.data);
           setReviews(el.data);
         } else {
           console.log(el, "FAILED");

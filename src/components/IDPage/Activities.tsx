@@ -1,7 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { EventsGrid, ImageModal, Tags } from "../StyledComponents/Styles";
+import {
+  EventsGrid,
+  ImageModal,
+  SvgContainer,
+  Tags,
+} from "../StyledComponents/Styles";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import PostReview from "../Reviews/PostReview";
+import MapsAPI from "../MapsAPI/MapsAPI";
+import PlacesIcon from "../StyledComponents/SvgIcons/PlacesIcon";
 interface Props {
   data: {
     id: string;
@@ -60,96 +67,124 @@ const Activities: React.FC<Props> = ({ data }) => {
     setOpen(false);
   };
   return (
-    <EventsGrid textlength={data.name.fi.length}>
-      {/* TextLenght Puts font size depending of text length */}
-      {/* Name and Link URL */}
-      <div>
-        {" "}
-        <h1>{data.name.fi} </h1>
+    <div>
+      <EventsGrid textlength={data.name.fi.length}>
+        {/* TextLenght Puts font size depending of text length */}
+        {/* Name and Link URL */}
         <div>
-          <div style={{ fontWeight: 700, color: "#969494" }}>
-            {data.where_when_duration.duration && (
-              <span>Duration: {data.where_when_duration.duration}</span>
-            )}
-          </div>
-          <div style={{ fontWeight: 700, color: "#969494" }}>
-            {data.where_when_duration.where_and_when && (
-              <span>
-                Place and When: {data.where_when_duration.where_and_when}
-              </span>
-            )}
-          </div>
-          <button onClick={() => window.open(data.info_url, "_blank")}>
-            Info{" "}
-          </button>
-        </div>{" "}
-      </div>
-      {/* Image */}
-      <div>
+          {" "}
+          <h1>{data.name.fi} </h1>
+          <div>
+            <div style={{ fontWeight: 700, color: "#969494" }}>
+              {data.where_when_duration.duration && (
+                <span>Duration: {data.where_when_duration.duration}</span>
+              )}
+            </div>
+            <div style={{ fontWeight: 700, color: "#969494" }}>
+              {data.where_when_duration.where_and_when && (
+                <span>
+                  Place and When: {data.where_when_duration.where_and_when}
+                </span>
+              )}
+            </div>
+            <button onClick={() => window.open(data.info_url, "_blank")}>
+              Info{" "}
+            </button>
+          </div>{" "}
+        </div>
+        {/* Image */}
         <div>
           <div>
-            <img
-              src={
-                data.description.images ? data.description.images[0].url : ""
-              }
-              alt={
-                data.description.images ? data.description.images[0].url : ""
-              }
-            />
+            <div>
+              <img
+                src={
+                  data.description.images ? data.description.images[0].url : ""
+                }
+                alt={
+                  data.description.images ? data.description.images[0].url : ""
+                }
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Location */}
-      <div>
-        LOCATION - {data.location.lat},{data.location.lon},
-        {data.location.address.locality},{data.location.address.postal_code},
-        {data.location.address.street_address}
-      </div>
-      {/* Opening Hours*/}
-      <div></div>
-      {/* Tags */}
+        {/* Location */}
 
-      <div>
-        {data.tags.map((el, index) => {
-          return <Tags key={index}># {el.name}</Tags>;
-        })}{" "}
-      </div>
-      {/* Description Body text */}
-      <div style={{ marginTop: "55px" }}>
-        {" "}
-        <h1>Description</h1>
-        <div dangerouslySetInnerHTML={{ __html: data.description.body }} />
-        {/* Event Dates */}
-      </div>
-      <div style={{ width: 300 }}>
-        {data.description.images?.map((el, index) => {
-          return (
-            <div key={index} onClick={() => OpenImageModal(el.url)}>
-              <img src={el.url} alt={el.license_type.name} />
-              <p>{el.copyright_holder}</p>{" "}
-            </div>
-          );
-        })}
-      </div>
-      <ImageModal open={open} id="imgModal" ref={ref}>
+        {/* Opening Hours*/}
+        <div></div>
+        {/* Dont remove thse divs ! */}
+        <div></div>
+        {/* Tags */}
+
         <div>
-          <button onClick={CloseImageModal}>
-            <AiOutlineCloseCircle size="45px" />
-          </button>
-          <img src={modalImage} alt={""} />
+          {data.tags.map((el, index) => {
+            return <Tags key={index}># {el.name}</Tags>;
+          })}{" "}
         </div>
-      </ImageModal>
-      <div
-        style={{
-          gridColumn: "1/4",
-          borderTop: "1px solid #ccc",
-          paddingTop: "15px",
-        }}
-      >
-        <PostReview id={data.id} />
+        {/* Description Body text */}
+        <div style={{ marginTop: "55px" }}>
+          {" "}
+          <h1>Description</h1>
+          <div dangerouslySetInnerHTML={{ __html: data.description.body }} />
+          {/* Event Dates */}
+        </div>
+        <div style={{ width: 300 }}>
+          {data.description.images?.map((el, index) => {
+            return (
+              <div key={index} onClick={() => OpenImageModal(el.url)}>
+                <img src={el.url} alt={el.license_type.name} />
+                <p
+                  style={{
+                    fontSize: "10px",
+                    display: "flex",
+                    color: "#858383",
+                  }}
+                >
+                  {el.copyright_holder}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+        <ImageModal open={open} id="imgModal" ref={ref}>
+          <div>
+            <button onClick={CloseImageModal}>
+              <AiOutlineCloseCircle size="45px" />
+            </button>
+            <img src={modalImage} alt={""} />
+          </div>
+        </ImageModal>
+        <div
+          style={{
+            gridColumn: "1/4",
+            borderTop: "1px solid #ccc",
+            paddingTop: "15px",
+          }}
+        >
+          <PostReview id={data.id} />
+        </div>
+      </EventsGrid>
+      <div style={{ width: "80%", margin: "0 auto" }}>
+        <SvgContainer width={200} height={150} style={{ margin: "0 auto" }}>
+          <PlacesIcon /> <h1> Location</h1>
+        </SvgContainer>
+        <div>
+          {data.location.address.locality},{data.location.address.postal_code},
+          {data.location.address.street_address}
+        </div>
+        <MapsAPI
+          address={data.location.address}
+          lat={data.location.lat}
+          lon={data.location.lon}
+          name={data.name.fi}
+          image={
+            data.description.images && data.description.images.length
+              ? data.description.images[0].url
+              : ""
+          }
+        />
       </div>
-    </EventsGrid>
+    </div>
   );
 };
 

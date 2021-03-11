@@ -9,6 +9,7 @@ import {
 import noImage from "../../staticimages/No_Image_Available.jpg";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import PostReview from "../Reviews/PostReview";
+import MapsAPI from "../MapsAPI/MapsAPI";
 
 interface Props {
   data: {
@@ -101,9 +102,21 @@ const Places: React.FC<Props> = ({ data }) => {
       </div>
       {/* Location */}
       <div>
-        LOCATION - {data.location.lat},{data.location.lon},
-        {data.location.address.locality},{data.location.address.postal_code},
-        {data.location.address.street_address}
+        <MapsAPI
+          address={data.location.address}
+          lat={data.location.lat}
+          lon={data.location.lon}
+          name={data.name.fi}
+          image={
+            data.description.images && data.description.images.length
+              ? data.description.images[0].url
+              : ""
+          }
+        />
+        <div style={{ color: "grey" }}>
+          {data.location.address.locality},{data.location.address.postal_code},
+          {data.location.address.street_address}
+        </div>
       </div>
       {/* Opening Hours*/}
       <div>
@@ -165,7 +178,15 @@ const Places: React.FC<Props> = ({ data }) => {
                   onClick={() => OpenImageModal(el.url)}
                 >
                   <img src={el.url} alt={el.license_type.name} />
-                  <p>{el.copyright_holder}</p>{" "}
+                  <p
+                    style={{
+                      fontSize: "10px",
+                      display: "flex",
+                      color: "#858383",
+                    }}
+                  >
+                    {el.copyright_holder}
+                  </p>{" "}
                 </div>
               );
             })
