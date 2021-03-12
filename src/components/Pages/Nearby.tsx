@@ -70,7 +70,6 @@ const Nearby: React.FC<Props> = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(JSON.stringify(res.tags).split(","), "res2");
         setData(res.data);
       })
       .catch((err) => {

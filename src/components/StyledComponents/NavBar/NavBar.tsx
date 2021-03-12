@@ -17,7 +17,7 @@ const NavBar = () => {
           {" "}
           <ButtonCards>
             <DinnerIcon />
-            <p>Dinner</p>
+            <p>Food</p>
           </ButtonCards>
         </Link>
         <Link to="/activities">

@@ -105,7 +105,9 @@ export const SelectStyle = styled.select`
 `;
 
 export const SearchButton = styled.button`
-  width: 50px;
+  width: 100px;
+  color: white;
+  font-family: "Kalam", cursive;
   background-color: #094263;
   height: 52px;
   cursor: pointer;
@@ -115,6 +117,10 @@ export const SearchButton = styled.button`
   align-items: center;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+  &:disabled {
+    background-color: #6d6a6a;
+    cursor: default;
+  }
 `;
 
 export const ItemsCard = styled.div`
