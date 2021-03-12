@@ -1,19 +1,24 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { RowDiv, SearchBarStyle, SearchButton, SelectStyle } from "../Styles";
 import SearchIcon from "../SvgIcons/SearchIcon";
 import ReactTags, { ReactTagsProps, Tag } from "react-tag-autocomplete";
 import "./SearchBar.css";
 import { FormEvent } from "react";
+import { useHistory, useLocation } from "react-router";
 interface Props {
   marginBottom: number;
 }
 const SearchBar: React.FC<Props> = ({ marginBottom }) => {
+  const history = useHistory();
+  const location = useLocation();
+  console.log(location, "the bar");
   const reactTags = useRef<any>();
   const [select, setSelect] = useState<string>("places");
   const [tagstoAPI, setTagstoAPI] = useState<Tag[]>([]);
   const [suggestions, setSuggestions] = useState<Tag[]>([]);
   const onChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelect(e.target.value);
+    setTagstoAPI([]);
   };
   const onDelete = (index: any) => {
     const arrCopy = [...tagstoAPI];
@@ -25,9 +30,20 @@ const SearchBar: React.FC<Props> = ({ marginBottom }) => {
   };
   console.log(tagstoAPI);
 
-  const searchTags = (e: FormEvent) => {
+  const testvam = (e: FormEvent) => {
     e.preventDefault();
-    console.log("se");
+    // Gets the array items , makes them in to string array and after that transofrms to whole string i pass it to the API fetch(where it gets encoded)
+    const copyArr = [...tagstoAPI];
+    const arrIds = copyArr.map((el) => el.id).join(",");
+
+    history.push({
+      pathname: "/search",
+      state: {
+        tags: arrIds,
+        input: tagstoAPI,
+        type: select === "places" ? "allplaces" : select,
+      },
+    });
   };
 
   useEffect(() => {
@@ -39,6 +55,7 @@ const SearchBar: React.FC<Props> = ({ marginBottom }) => {
       }/api/Routs/getTags/${select?.toLowerCase()}`,
       {
         method: "GET",
+        signal: abortCont.signal,
         headers: { "Content-Type": "application/json" },
       }
     )
@@ -70,13 +87,14 @@ const SearchBar: React.FC<Props> = ({ marginBottom }) => {
   }, [select]);
   return (
     <RowDiv marginBottom={marginBottom}>
-      <form style={{ display: "flex" }} onSubmit={searchTags}>
+      <form style={{ display: "flex" }} onSubmit={testvam}>
         <SearchButton type="submit" disabled={tagstoAPI.length ? false : true}>
           <SearchIcon />
           Search
         </SearchButton>
 
         <ReactTags
+          placeholderText={"Add new search tag"}
           ref={reactTags}
           tags={tagstoAPI}
           suggestions={suggestions}

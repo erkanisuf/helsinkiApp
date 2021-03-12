@@ -14,6 +14,7 @@ import { Store } from "./Context/AppContext";
 import { Cookies } from "react-cookie";
 import Nearby from "./components/Pages/Nearby";
 import MapsAPI from "./components/MapsAPI/MapsAPI";
+import Search from "./components/Pages/Search";
 
 function App(): JSX.Element {
   const { state, dispatch } = useContext(Store);
@@ -102,6 +103,9 @@ function App(): JSX.Element {
         </Route>
         <Route path="/allbyid/:id/:id">
           <IDPage />
+        </Route>
+        <Route path="/search">
+          <Search />
         </Route>
         <Route path="/login">
           <SVGPageHeader>

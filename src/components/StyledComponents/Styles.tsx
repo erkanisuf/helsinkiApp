@@ -117,6 +117,7 @@ export const SearchButton = styled.button`
   align-items: center;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+  transition: 1s;
   &:disabled {
     background-color: #6d6a6a;
     cursor: default;
