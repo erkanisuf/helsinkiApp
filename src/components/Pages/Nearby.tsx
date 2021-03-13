@@ -166,11 +166,11 @@ const Nearby: React.FC<Props> = () => {
       </div>
       <PageContainer>
         {data
-          .sort((a: Data, b: Data) => {
-            if (a.description.images == null) return 1; // this function fixes issues if the Api has value null (images)
-            if (b.description.images == null) return 0;
-            return b.description.images.length - a.description.images.length; // Sorts Items first by image avaibility
-          })
+          // .sort((a: Data, b: Data) => {
+          //   if (a.description.images == null) return 1; // this function fixes issues if the Api has value null (images)
+          //   if (b.description.images == null) return 0;
+          //   return b.description.images.length - a.description.images.length; // Sorts Items first by image avaibility
+          // }) // NOTE: This is used if needs to Sort Elements with Image (because most of the data has no images)
           .map((el, index) => {
             return <ItemCard key={index} type={param.id} data={el} />;
           })}

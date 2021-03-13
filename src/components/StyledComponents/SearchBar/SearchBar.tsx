@@ -30,7 +30,7 @@ const SearchBar: React.FC<Props> = ({ marginBottom }) => {
   };
   console.log(tagstoAPI);
 
-  const testvam = (e: FormEvent) => {
+  const RedirectToSearchPage = (e: FormEvent) => {
     e.preventDefault();
     // Gets the array items , makes them in to string array and after that transofrms to whole string i pass it to the API fetch(where it gets encoded)
     const copyArr = [...tagstoAPI];
@@ -41,7 +41,7 @@ const SearchBar: React.FC<Props> = ({ marginBottom }) => {
       state: {
         tags: arrIds,
         input: tagstoAPI,
-        type: select === "places" ? "allplaces" : select,
+        type: select === "places" ? "allplaces" : select.toLowerCase(),
       },
     });
   };
@@ -87,7 +87,7 @@ const SearchBar: React.FC<Props> = ({ marginBottom }) => {
   }, [select]);
   return (
     <RowDiv marginBottom={marginBottom}>
-      <form style={{ display: "flex" }} onSubmit={testvam}>
+      <form style={{ display: "flex" }} onSubmit={RedirectToSearchPage}>
         <SearchButton type="submit" disabled={tagstoAPI.length ? false : true}>
           <SearchIcon />
           Search

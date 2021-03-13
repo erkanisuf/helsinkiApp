@@ -9,6 +9,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import PostReview from "../Reviews/PostReview";
 import MapsAPI from "../MapsAPI/MapsAPI";
 import PlacesIcon from "../StyledComponents/SvgIcons/PlacesIcon";
+import { useHistory } from "react-router";
 interface Props {
   data: {
     id: string;
@@ -45,6 +46,8 @@ interface Images {
 
 const Activities: React.FC<Props> = ({ data }) => {
   const ref = useRef<any>(null);
+  const history = useHistory();
+
   const [modalImage, setModalImage] = useState<string>();
   const [open, setOpen] = useState<boolean>(false);
   const handleClickOutside = (event: any) => {
@@ -65,6 +68,18 @@ const Activities: React.FC<Props> = ({ data }) => {
   };
   const CloseImageModal = () => {
     setOpen(false);
+  };
+  const RedirectToSearchPage = (e: string) => {
+    // Gets the array items , makes them in to string array and after that transofrms to whole string i pass it to the API fetch(where it gets encoded)
+    const searchedTag = { name: e };
+    history.push({
+      pathname: "/search",
+      state: {
+        tags: e,
+        input: [searchedTag],
+        type: "activities",
+      },
+    });
   };
   return (
     <div>
@@ -118,7 +133,11 @@ const Activities: React.FC<Props> = ({ data }) => {
 
         <div>
           {data.tags.map((el, index) => {
-            return <Tags key={index}># {el.name}</Tags>;
+            return (
+              <Tags onClick={() => RedirectToSearchPage(el.name)} key={index}>
+                # {el.name}
+              </Tags>
+            );
           })}{" "}
         </div>
         {/* Description Body text */}

@@ -272,6 +272,7 @@ export const DaysContainer = styled.div`
     font-weight: 600;
   }
 `;
+
 export const Tags = styled.div`
   background-color: #10a7ff;
   background-image: linear-gradient(160deg, #0093e9 10%, #80d0c7 100%);
@@ -283,6 +284,7 @@ export const Tags = styled.div`
   min-width: 200;
   max-width: 210px;
   font-weight: 500;
+
   cursor: pointer;
 `;
 // PLACES GRID

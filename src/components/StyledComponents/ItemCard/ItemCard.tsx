@@ -129,7 +129,16 @@ const ItemCard: React.FC<Props> = ({ type, data }) => {
               }")`,
             }}
           ></div>
-          <p>{data.name.en ? data.name.en : data.name.fi}</p>
+          <p
+            style={{
+              maxHeight: "20px",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {data.name.en ? data.name.en : data.name.fi}
+          </p>
           <p style={{ fontSize: "12px", color: "#727272" }}>
             {moment(
               data.event_dates
@@ -194,13 +203,14 @@ const ItemCard: React.FC<Props> = ({ type, data }) => {
           ></div>
           <p
             style={{
+              maxHeight: "40px",
+              height: "30px",
               overflow: "hidden",
-              width: "80%",
-              margin: "10px auto",
-              height: "40px",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
             }}
           >
-            {data.name.en}
+            {data.name.en ? data.name.en : data.name.fi}
           </p>
 
           <div

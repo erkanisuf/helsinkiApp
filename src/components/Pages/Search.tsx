@@ -1,7 +1,16 @@
+import { getDistance } from "geolib";
 import React, { useEffect, useState } from "react";
+import { useContext } from "react";
+import { MdGpsFixed } from "react-icons/md";
 import { useLocation } from "react-router";
+import { Store } from "../../Context/AppContext";
 import ItemCard from "../StyledComponents/ItemCard/ItemCard";
-import { PageContainer, SvgContainer } from "../StyledComponents/Styles";
+import {
+  Button,
+  PageContainer,
+  SvgContainer,
+  Tags,
+} from "../StyledComponents/Styles";
 import SVGPageHeader from "../StyledComponents/SVGbackground/SVGPageHeader";
 import LoadingIcon from "../StyledComponents/SvgIcons/LoadingIcon";
 
@@ -38,10 +47,14 @@ type searchedTags = {
 };
 const Search = () => {
   const location = useLocation<Location>();
-  console.log("s", location.state);
+  const { state, dispatch } = useContext(Store);
   const [data, setData] = useState<Data[]>([]);
   const [error, setError] = useState<boolean>(false);
+  const [searchresult, setSearchresult] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
+    setLoading(true);
+    setError(false);
     const abortCont = new AbortController();
     //`${process.env.REACT_APP_SERVER_URL}/api/Routs/searchByTag/${tagstoAPI[0].id},${tagstoAPI[1].id}`
     // NOTE!: EncodeUrlComponent transforms the string to valid url for the API "it changes the :,comma etc. to special symbols %!@#! etc."
@@ -58,21 +71,77 @@ const Search = () => {
       )
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
-          setData(res.data);
+          if (!res.data.length) {
+            setSearchresult("No items were found with these tags:");
+            setLoading(false);
+            setError(false);
+          } else {
+            setData(res.data);
+            setLoading(false);
+            setError(false);
+          }
         })
         .catch((err) => {
           if (err.name === "AbortError") {
             console.log("err ABORT");
           } else {
             setError(true);
+            setLoading(false);
           }
         });
     }
+
     return () => {
       abortCont.abort();
     };
   }, [location]);
+  // End UseEffect Fetc
+
+  //Sort Results of Front end by Distance
+  const sortbyDistance = () => {
+    setLoading(true);
+    setError(false);
+    //`${process.env.REACT_APP_SERVER_URL}/api/Routs/searchByTag/${tagstoAPI[0].id},${tagstoAPI[1].id}`
+    // NOTE!: EncodeUrlComponent transforms the string to valid url for the API "it changes the :,comma etc. to special symbols %!@#! etc."
+    if (location.state && location.state.type !== undefined) {
+      fetch(
+        `${process.env.REACT_APP_SERVER_URL}/api/Routs/searchTags${
+          location.state.type
+        }Distance/${encodeURIComponent(location.state.tags)}`,
+        {
+          method: "POST",
+
+          body: JSON.stringify({
+            latitude: state.location?.latitude.toString(),
+            longitude: state.location?.longitude.toString(),
+          }),
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+        .then((res) => {
+          console.log(res);
+          return res.json();
+        })
+        .then((res) => {
+          console.log(res, "WTF");
+          if (!res.data.length) {
+            setSearchresult("No items were found with these tags:");
+            setLoading(false);
+            setError(false);
+          } else {
+            setData(res.data);
+            setLoading(false);
+            setError(false);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setError(true);
+          setLoading(false);
+        });
+    }
+  };
+
   if (error) {
     return (
       <SVGPageHeader>
@@ -82,27 +151,70 @@ const Search = () => {
   } else if (!data.length || location.state.type === undefined) {
     return (
       <SVGPageHeader>
-        <SvgContainer width={120} height={150} style={{ margin: "0 auto" }}>
-          <LoadingIcon />
-        </SvgContainer>
+        <div>
+          <h4>{searchresult ? searchresult : "Results with tags:"}</h4>
+          <div
+            style={{
+              display: "flex",
+              margin: "15px auto",
+              justifyContent: "center",
+            }}
+          >
+            {location.state.input.map((el, index) => {
+              return <Tags key={index}># {el.name}</Tags>;
+            })}
+          </div>
+        </div>
+        {loading && (
+          <SvgContainer width={120} height={150} style={{ margin: "0 auto" }}>
+            <LoadingIcon />
+          </SvgContainer>
+        )}
       </SVGPageHeader>
     );
   }
   return (
     <SVGPageHeader>
       <div>
-        You Searched for:{" "}
-        {location.state.input.map((el, index) => {
-          return <span>{el.name},</span>;
-        })}
+        <h4>{searchresult ? searchresult : "Results with tags:"}</h4>
+        <div
+          style={{
+            display: "flex",
+            margin: "15px auto",
+            justifyContent: "center",
+          }}
+        >
+          {location.state.input.map((el, index) => {
+            return <Tags key={index}># {el.name}</Tags>;
+          })}
+        </div>
+        <div
+          style={{
+            width: "70%",
+            margin: "0 auto",
+            borderBottom: "1px solid #ccc",
+            padding: "10px",
+            display: "flex",
+            alignItems: "flex-start",
+          }}
+        >
+          <Button
+            onClick={sortbyDistance}
+            disabled={!state.location?.latitude ? true : false}
+          >
+            {" "}
+            <MdGpsFixed style={{ fontSize: "25px" }} />
+            {!state.location?.latitude ? "Location Turned off" : "Closes to me"}
+          </Button>
+        </div>
       </div>
       <PageContainer>
         {data
-          .sort((a: Data, b: Data) => {
-            if (a.description.images == null) return 1; // this function fixes issues if the Api has value null (images)
-            if (b.description.images == null) return 0;
-            return b.description.images.length - a.description.images.length; // Sorts Items first by image avaibility
-          })
+          // .sort((a: Data, b: Data) => {
+          //   if (a.description.images == null) return 1; // this function fixes issues if the Api has value null (images)
+          //   if (b.description.images == null) return 0;
+          //   return b.description.images.length - a.description.images.length; // Sorts Items first by image avaibility
+          // }) NOTE: Use Only if you want to show the ones with images first (Most of the Data has no Images !)
           .map((el, index) => {
             return (
               <ItemCard key={index} type={location.state.type} data={el} />

@@ -10,6 +10,7 @@ import noImage from "../../staticimages/No_Image_Available.jpg";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import PostReview from "../Reviews/PostReview";
 import MapsAPI from "../MapsAPI/MapsAPI";
+import { useHistory } from "react-router";
 
 interface Props {
   data: {
@@ -48,6 +49,7 @@ interface Images {
 }
 //
 const Places: React.FC<Props> = ({ data }) => {
+  const history = useHistory();
   const ref = useRef<any>(null);
   const [modalImage, setModalImage] = useState<string>();
   const [open, setOpen] = useState<boolean>(false); // Opens and close Image Modal !
@@ -90,6 +92,19 @@ const Places: React.FC<Props> = ({ data }) => {
   const CloseImageModal = () => {
     setOpen(false);
   };
+  const RedirectToSearchPage = (e: string) => {
+    // Gets the array items , makes them in to string array and after that transofrms to whole string i pass it to the API fetch(where it gets encoded)
+    const searchedTag = { name: e };
+    history.push({
+      pathname: "/search",
+      state: {
+        tags: e,
+        input: [searchedTag],
+        type: "allplaces",
+      },
+    });
+  };
+
   return (
     <GridPage>
       {/* <div>ID: - {data.id}</div>  */}
@@ -156,7 +171,11 @@ const Places: React.FC<Props> = ({ data }) => {
       {/* Tags */}
       <div>
         {data.tags.map((el, index) => {
-          return <Tags key={index}># {el.name}</Tags>;
+          return (
+            <Tags onClick={() => RedirectToSearchPage(el.name)} key={index}>
+              # {el.name}
+            </Tags>
+          );
         })}{" "}
       </div>
       {/* Description Body text */}
