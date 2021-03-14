@@ -1,4 +1,5 @@
 import React from "react";
+import { AiFillHome } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import UserModal from "../../User/UserModal";
 import SearchBar from "../SearchBar/SearchBar";
@@ -6,6 +7,7 @@ import { NavBarContainer, PageHeader, PagesNav, SvgContainer } from "../Styles";
 import HomeIcon from "../SvgIcons/HomeIcon";
 import "./SVGbackgorund.css";
 import SVGFooterPage from "./SVGFooterPage";
+import MainImage from "../../../staticimages/whiteMain.png";
 interface MyProps {
   children?: React.ReactNode;
 }
@@ -15,15 +17,41 @@ const SVGPageHeader: React.FunctionComponent<MyProps> = (props) => {
     <div>
       <PageHeader>
         <UserModal />
-        <SearchBar marginBottom={0} />
-
+        <div>
+          <img
+            src={MainImage}
+            alt="mainimage"
+            style={{
+              marginBottom: "-1px",
+              width: "300px",
+            }}
+          />
+          <SearchBar marginBottom={0} />
+        </div>
         <PagesNav>
+          <Link
+            to="/"
+            style={{
+              fontSize: "26px",
+              display: window.innerWidth <= 768 ? "block" : "none",
+            }}
+          >
+            {" "}
+            <AiFillHome />
+          </Link>
           <Link to="/placetoeat"> Places to eat</Link>
           <Link to="/activities">Activities</Link>
           <Link to="/events">Events</Link>
           <Link to="/allplaces"> Places</Link>
         </PagesNav>
-        <Link to="/" style={{ marginLeft: "105px" }}>
+
+        <Link
+          to="/"
+          style={{
+            marginLeft: "105px",
+            display: window.innerWidth >= 769 ? "block" : "none",
+          }}
+        >
           {" "}
           <HomeIcon />
         </Link>

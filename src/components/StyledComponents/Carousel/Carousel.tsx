@@ -47,7 +47,7 @@ const responsive = {
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
-    items: 1,
+    items: 2,
   },
 };
 const CarouselComp: React.FC<Props> = ({ data, type }) => {
@@ -66,7 +66,7 @@ const CarouselComp: React.FC<Props> = ({ data, type }) => {
   return (
     <Carousel renderButtonGroupOutside={true} responsive={responsive}>
       {data.map((el, index) => {
-        return <ItemCard key={index} type={type} data={el} />;
+        return <ItemCard key={index} type={type} data={el} width={"140"} />;
       })}
     </Carousel>
   );

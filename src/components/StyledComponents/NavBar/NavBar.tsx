@@ -7,10 +7,20 @@ import DinnerIcon from "../SvgIcons/DinnerIcon";
 import EventsIcon from "../SvgIcons/EventsIcon";
 import PlacesIcon from "../SvgIcons/PlacesIcon";
 import { Link } from "react-router-dom";
+import MainImage from "../../../staticimages/whiteMain.png";
 
 const NavBar = () => {
   return (
     <SVGbackground>
+      {/* Main image in .png with transp background */}
+      <img
+        src={MainImage}
+        alt="mainimage"
+        style={{
+          marginBottom: "-1px",
+          width: "300px",
+        }}
+      />
       <SearchBar marginBottom={100} />
       <RowDiv marginBottom={-250}>
         <Link to="/placetoeat">

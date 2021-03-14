@@ -25,7 +25,7 @@
 .react-tags {
   position: relative;
   padding: 6px 0 0 6px;
-  border: 1px solid #d1d1d1;
+  border: none;
   border-radius: 1px;
   width: 100%;
   min-width: 300px;
@@ -167,4 +167,26 @@
 .react-tags__suggestions li.is-disabled {
   opacity: 0.5;
   cursor: auto;
+}
+
+@media (max-width: 768px) {
+  .react-tags__search-input {
+    min-width: 100px;
+  }
+  .react-tags {
+    min-width: 200px;
+    width: 100px;
+  }
+  .react-tags__suggestions {
+    width: 100px;
+  }
+  .react-tags__selected-tag {
+    font-size: 8px;
+  }
+  .react-tags__search-input {
+    font-size: 10px;
+  }
+  .react-tags__suggestions ul {
+    font-size: 10px;
+  }
 }

@@ -10,6 +10,7 @@ import moment from "moment";
 
 interface Props {
   type: string;
+  width?: string;
   data: {
     name: Language;
     id: string;
@@ -40,7 +41,7 @@ interface LocationInterface {
   longitude: number;
   latitude: number;
 }
-const ItemCard: React.FC<Props> = ({ type, data }) => {
+const ItemCard: React.FC<Props> = ({ type, data, width }) => {
   const { state, dispatch } = useContext(Store);
 
   const [reviews, setReviews] = useState<ReviewDataObject[]>([]);
@@ -118,7 +119,7 @@ const ItemCard: React.FC<Props> = ({ type, data }) => {
         }}
       >
         {" "}
-        <ItemsCard>
+        <ItemsCard width={width}>
           <div
             className="card-img"
             style={{
@@ -190,7 +191,7 @@ const ItemCard: React.FC<Props> = ({ type, data }) => {
           },
         }}
       >
-        <ItemsCard>
+        <ItemsCard width={width}>
           <div
             className="card-img"
             style={{

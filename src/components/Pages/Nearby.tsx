@@ -142,9 +142,20 @@ const Nearby: React.FC<Props> = () => {
   }
   return (
     <SVGPageHeader>
+      <h1
+        style={{
+          textAlign: window.innerWidth <= 768 ? "center" : "left",
+          width: "70%",
+          margin: "0 auto",
+          color: "#ccc",
+          fontSize: window.innerWidth <= 768 ? "18px" : "",
+        }}
+      >
+        /nearby/{param.id}
+      </h1>
       <div
         style={{
-          width: "70%",
+          width: window.innerWidth <= 768 ? "100%" : "70%",
           margin: "0 auto",
           borderBottom: "1px solid #ccc",
           padding: "10px",
@@ -172,7 +183,9 @@ const Nearby: React.FC<Props> = () => {
           //   return b.description.images.length - a.description.images.length; // Sorts Items first by image avaibility
           // }) // NOTE: This is used if needs to Sort Elements with Image (because most of the data has no images)
           .map((el, index) => {
-            return <ItemCard key={index} type={param.id} data={el} />;
+            return (
+              <ItemCard key={index} type={param.id} data={el} width={"180"} />
+            );
           })}
       </PageContainer>
       <div

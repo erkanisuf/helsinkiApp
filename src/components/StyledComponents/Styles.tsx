@@ -29,6 +29,10 @@ export const Button = styled.button`
       border: none;
     }
   }
+  @media (max-width: 768px) {
+    width: 150px;
+    height: 40px;
+  }
 `;
 export const ButtonCards = styled.div`
   display: "flex";
@@ -52,6 +56,11 @@ export const ButtonCards = styled.div`
   }
   p {
     margin: 0;
+  }
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 60px;
+    margin: 0 2px;
   }
 `;
 
@@ -85,6 +94,8 @@ export const RowDiv = styled.div<RowDivProps>`
   a {
     text-decoration: none;
   }
+  @media (max-width: 768px) {
+  }
 `;
 
 export const SearchBarStyle = styled.input`
@@ -102,6 +113,10 @@ export const SelectStyle = styled.select`
   border-left: 5px solid #5eb7eb;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  @media (max-width: 768px) {
+    width: 65px;
+    font-size: 10px;
+  }
 `;
 
 export const SearchButton = styled.button`
@@ -113,18 +128,29 @@ export const SearchButton = styled.button`
   cursor: pointer;
   outline: none;
   border: none;
+  padding: 5px;
   display: flex;
   align-items: center;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   transition: 1s;
+  display: flex;
+  flex-direction: column;
   &:disabled {
     background-color: #6d6a6a;
     cursor: default;
   }
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    width: 50px;
+    font-size: 10px;
+  }
 `;
-
-export const ItemsCard = styled.div`
+interface CardProps {
+  width?: string;
+}
+export const ItemsCard = styled.div<CardProps>`
   display: "flex";
   flex-direction: column;
   justify-content: center;
@@ -159,6 +185,13 @@ export const ItemsCard = styled.div`
     padding: 5px;
     height: 150px;
   }
+  @media (max-width: 768px) {
+    width: ${(props) => props.width}px;
+    height: 240px;
+    span {
+      font-size: 10px;
+    }
+  }
 `;
 
 export const CarouselContainer = styled.div`
@@ -172,6 +205,11 @@ export const CarouselContainer = styled.div`
   padding: 50px;
   h1 {
     text-align: left;
+  }
+  @media (max-width: 768px) {
+    width: 70%;
+
+    overflow: hidden;
   }
 `;
 
@@ -198,6 +236,13 @@ export const PageContainer = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
   margin-bottom: 20px;
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 export const PageHeader = styled.div`
@@ -211,6 +256,12 @@ export const PageHeader = styled.div`
   padding-top: 50px;
   align-items: center;
   align-self: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    background-image: linear-gradient(160deg, #0093e9 80%, #80d0c7 100%);
+    justify-content: center;
+  }
 `;
 
 export const NextPrevbtn = styled.button`
@@ -251,6 +302,13 @@ export const PagesNav = styled.div`
     &:hover {
       background-color: #54b4ec;
       transform: scale(1.1);
+    }
+  }
+  @media (max-width: 768px) {
+    width: 95%;
+    margin: 10px auto;
+    a {
+      font-size: 12px;
     }
   }
 `;
@@ -550,7 +608,7 @@ export const EventsGrid = styled.div<TextLength>`
   }
 `;
 
-//Login Modals - Toggler
+//Login Modals - Toggler ,NOTE:This is only the login toggler!
 interface ModalProps {
   open: boolean;
 }
@@ -572,6 +630,14 @@ export const Modal = styled.div<ModalProps>`
   border: 1px solid white;
   border-radius: 10px;
   padding: 35px 0px;
+  @media (max-width: 768px) {
+    height: 150px;
+    background: ${"rgb(68, 150, 204)"};
+    left: -15px;
+    top: -10px;
+    z-index: 5;
+    font-size: 10px;
+  }
 `;
 
 //In the Top right bar the toggling one
@@ -622,17 +688,35 @@ export const LoginForm = styled.div<ModalProps>`
       text-decoration: underline;
     }
   }
+  @media (max-width: 768px) {
+    height: 140px;
+
+    form {
+      font-size: 10px;
+      padding: 10px;
+      height: 140px;
+
+      input {
+        padding: 6px;
+      }
+      input[type="submit"] {
+        font-size: 10px;
+        width: 80%;
+        margin: 2px;
+      }
+      p {
+        font-size: 10px;
+      }
+    }
+  }
 `;
 // This is in the Route Wrapper for Register and Login.
 export const WrapperLoginAndRegister = styled.div`
   width: 300px;
   height: 100%;
-
   margin: 0 auto;
   flex-direction: column;
   align-items: center;
-
-  height: 100%;
   justify-content: space-between;
   text-align: left;
   color: #0093e9;
@@ -645,6 +729,18 @@ export const WrapperLoginAndRegister = styled.div`
     width: 250px;
     margin: 15px auto;
     border: 1px solid #ccc;
+  }
+  @media (max-width: 768px) {
+    border: 1px solid #0093e9;
+    height: 300px;
+    width: 280px;
+
+    input {
+      margin: 5px auto;
+    }
+    form {
+      margin: 35px auto;
+    }
   }
 `;
 

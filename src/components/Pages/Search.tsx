@@ -190,7 +190,7 @@ const Search = () => {
         </div>
         <div
           style={{
-            width: "70%",
+            width: window.innerWidth <= 768 ? "100%" : "70%",
             margin: "0 auto",
             borderBottom: "1px solid #ccc",
             padding: "10px",
@@ -217,7 +217,12 @@ const Search = () => {
           // }) NOTE: Use Only if you want to show the ones with images first (Most of the Data has no Images !)
           .map((el, index) => {
             return (
-              <ItemCard key={index} type={location.state.type} data={el} />
+              <ItemCard
+                key={index}
+                type={location.state.type}
+                data={el}
+                width={"180"}
+              />
             );
           })}
       </PageContainer>

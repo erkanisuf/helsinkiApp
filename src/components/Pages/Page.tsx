@@ -119,9 +119,20 @@ const Page: React.FC<Props> = ({ link, type }) => {
   }
   return (
     <SVGPageHeader>
+      <h1
+        style={{
+          textAlign: window.innerWidth <= 768 ? "center" : "left",
+          width: "70%",
+          margin: "0 auto",
+          color: "#ccc",
+          fontSize: window.innerWidth <= 768 ? "18px" : "",
+        }}
+      >
+        /{type}
+      </h1>
       <div
         style={{
-          width: "70%",
+          width: window.innerWidth <= 768 ? "100%" : "70%",
           margin: "0 auto",
           borderBottom: "1px solid #ccc",
           padding: "10px",
@@ -149,7 +160,7 @@ const Page: React.FC<Props> = ({ link, type }) => {
             return b.description.images.length - a.description.images.length; // Sorts Items first by image avaibility
           })
           .map((el, index) => {
-            return <ItemCard key={index} type={type} data={el} />;
+            return <ItemCard key={index} type={type} data={el} width={"180"} />;
           })}
       </PageContainer>
       <div

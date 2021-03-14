@@ -44,6 +44,7 @@ const Login: React.FC<Props> = ({ open }) => {
         if (!el.isSuccs) {
           setError(el.errors);
           setSuccs("");
+          setLoading(false);
           console.log(el);
         } else {
           const date = new Date(new Date().getTime() + 60 * 60 * 1000); // Expires in 1 minute (change 1 if want more),in backend is diffrent for now CHANGE LATER!
