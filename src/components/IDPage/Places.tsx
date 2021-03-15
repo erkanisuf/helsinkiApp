@@ -4,6 +4,7 @@ import {
   GridImageDiv,
   GridPage,
   ImageModal,
+  SvgContainer,
   Tags,
 } from "../StyledComponents/Styles";
 import noImage from "../../staticimages/No_Image_Available.jpg";
@@ -11,6 +12,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import PostReview from "../Reviews/PostReview";
 import MapsAPI from "../MapsAPI/MapsAPI";
 import { useHistory } from "react-router";
+import PlacesIcon from "../StyledComponents/SvgIcons/PlacesIcon";
 
 interface Props {
   data: {
@@ -106,17 +108,132 @@ const Places: React.FC<Props> = ({ data }) => {
   };
 
   return (
-    <GridPage>
-      {/* <div>ID: - {data.id}</div>  */}
-      {/* Name and Link URL */}
-      <div>
-        <h1>{data.name.fi} </h1>
+    <div>
+      <GridPage>
+        {/* <div>ID: - {data.id}</div>  */}
+        {/* Name and Link URL */}
         <div>
-          <a href={data.info_url}> Website </a>
+          <h1>{data.name.fi} </h1>
+          <div>
+            <a href={data.info_url}> Website </a>
+          </div>
         </div>
+        {/* Location */}
+        <div></div>
+        {/* Opening Hours*/}
+        <div>
+          <div>
+            {data.opening_hours.hours.map((el, index) => {
+              return (
+                <DaysContainer key={index}>
+                  <div>
+                    <p>{WeekDayToName(el.weekday_id)}</p>
+                  </div>
+                  <div>
+                    <span>
+                      {el.opens
+                        ? el.opens.substring(0, el.opens.length - 3)
+                        : "Closed"}
+                    </span>{" "}
+                    -{" "}
+                    <span>
+                      {el.closes
+                        ? el.closes.substring(0, el.closes.length - 3)
+                        : ""}
+                    </span>
+                  </div>
+                  {el.open24h && <div>24/7</div>}
+                </DaysContainer>
+              );
+            })}
+          </div>
+          {data.opening_hours.openinghours_exception && (
+            <div
+              style={{ fontStyle: "italic", color: "red", margin: "10px auto" }}
+            >
+              Note: " {data.opening_hours.openinghours_exception} "
+            </div>
+          )}
+        </div>
+        {/* Tags */}
+        <div>
+          {data.tags.map((el, index) => {
+            return (
+              <Tags onClick={() => RedirectToSearchPage(el.name)} key={index}>
+                # {el.name}
+              </Tags>
+            );
+          })}{" "}
+        </div>
+        {/* Description Body text */}
+        <div>
+          {" "}
+          <h1>Description</h1>
+          <p>{data.description.body}</p>
+        </div>
+        {/* Images */}
+        {/* Checks if there is images property first . If there is after that checks the lengs if there is any image. If no image render static img */}
+        <GridImageDiv>
+          {data.description.images ? (
+            data.description.images.length ? (
+              data.description.images.map((el, index) => {
+                return (
+                  <div
+                    style={{ cursor: "Pointer" }}
+                    key={index}
+                    onClick={() => OpenImageModal(el.url)}
+                  >
+                    <img src={el.url} alt={el.license_type.name} />
+                    <p
+                      style={{
+                        fontSize: "10px",
+                        display: "flex",
+                        color: "#858383",
+                      }}
+                    >
+                      {el.copyright_holder}
+                    </p>{" "}
+                  </div>
+                );
+              })
+            ) : (
+              <div>
+                <img src={noImage} alt={"No Image"} />
+                <p>{"No Image"}</p>{" "}
+              </div>
+            )
+          ) : (
+            ""
+          )}
+        </GridImageDiv>
+        <ImageModal open={open} id="imgModal" ref={ref}>
+          <div>
+            <button onClick={CloseImageModal}>
+              {" "}
+              <AiOutlineCloseCircle size="45px" />
+            </button>
+            <img src={modalImage} alt={""} />
+          </div>
+        </ImageModal>
+      </GridPage>
+      <div
+        style={{
+          gridColumn: "1/4",
+          // gridRow: window.innerWidth <= 768 ? "7" : "7",
+          borderTop: "1px solid #ccc",
+          paddingTop: "15px",
+        }}
+      >
+        <PostReview id={data.id} />
       </div>
-      {/* Location */}
-      <div>
+      <div style={{ width: "80%", margin: "0 auto" }}>
+        <SvgContainer width={200} height={150} style={{ margin: "0 auto" }}>
+          <PlacesIcon /> <h1> Location</h1>
+        </SvgContainer>
+        <div style={{ color: "grey" }}>
+          {data.location.address.locality},{data.location.address.postal_code},
+          {data.location.address.street_address}
+        </div>
         <MapsAPI
           address={data.location.address}
           lat={data.location.lat}
@@ -128,116 +245,8 @@ const Places: React.FC<Props> = ({ data }) => {
               : ""
           }
         />
-        <div style={{ color: "grey" }}>
-          {data.location.address.locality},{data.location.address.postal_code},
-          {data.location.address.street_address}
-        </div>
       </div>
-      {/* Opening Hours*/}
-      <div>
-        <div>
-          {data.opening_hours.hours.map((el, index) => {
-            return (
-              <DaysContainer key={index}>
-                <div>
-                  <p>{WeekDayToName(el.weekday_id)}</p>
-                </div>
-                <div>
-                  <span>
-                    {el.opens
-                      ? el.opens.substring(0, el.opens.length - 3)
-                      : "Closed"}
-                  </span>{" "}
-                  -{" "}
-                  <span>
-                    {el.closes
-                      ? el.closes.substring(0, el.closes.length - 3)
-                      : ""}
-                  </span>
-                </div>
-                {el.open24h && <div>24/7</div>}
-              </DaysContainer>
-            );
-          })}
-        </div>
-        {data.opening_hours.openinghours_exception && (
-          <div
-            style={{ fontStyle: "italic", color: "red", margin: "10px auto" }}
-          >
-            Note: " {data.opening_hours.openinghours_exception} "
-          </div>
-        )}
-      </div>
-      {/* Tags */}
-      <div>
-        {data.tags.map((el, index) => {
-          return (
-            <Tags onClick={() => RedirectToSearchPage(el.name)} key={index}>
-              # {el.name}
-            </Tags>
-          );
-        })}{" "}
-      </div>
-      {/* Description Body text */}
-      <div>
-        {" "}
-        <h1>Description</h1>
-        <p>{data.description.body}</p>
-      </div>
-      {/* Images */}
-      {/* Checks if there is images property first . If there is after that checks the lengs if there is any image. If no image render static img */}
-      <GridImageDiv>
-        {data.description.images ? (
-          data.description.images.length ? (
-            data.description.images.map((el, index) => {
-              return (
-                <div
-                  style={{ cursor: "Pointer" }}
-                  key={index}
-                  onClick={() => OpenImageModal(el.url)}
-                >
-                  <img src={el.url} alt={el.license_type.name} />
-                  <p
-                    style={{
-                      fontSize: "10px",
-                      display: "flex",
-                      color: "#858383",
-                    }}
-                  >
-                    {el.copyright_holder}
-                  </p>{" "}
-                </div>
-              );
-            })
-          ) : (
-            <div>
-              <img src={noImage} alt={"No Image"} />
-              <p>{"No Image"}</p>{" "}
-            </div>
-          )
-        ) : (
-          ""
-        )}
-      </GridImageDiv>
-      <ImageModal open={open} id="imgModal" ref={ref}>
-        <div>
-          <button onClick={CloseImageModal}>
-            {" "}
-            <AiOutlineCloseCircle size="45px" />
-          </button>
-          <img src={modalImage} alt={""} />
-        </div>
-      </ImageModal>
-      <div
-        style={{
-          gridColumn: "1/4",
-          borderTop: "1px solid #ccc",
-          paddingTop: "15px",
-        }}
-      >
-        <PostReview id={data.id} />
-      </div>
-    </GridPage>
+    </div>
   );
 };
 

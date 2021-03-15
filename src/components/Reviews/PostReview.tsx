@@ -85,7 +85,7 @@ const PostReview: React.FC<Props> = ({ id }) => {
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
+        flexDirection: window.innerWidth <= 768 ? "column" : "row",
         width: "80%",
         margin: "0 auto",
         alignItems: "center",

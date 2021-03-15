@@ -187,7 +187,7 @@ export const ItemsCard = styled.div<CardProps>`
   }
   @media (max-width: 768px) {
     width: ${(props) => props.width}px;
-    height: 240px;
+    height: 250px;
     span {
       font-size: 10px;
     }
@@ -344,6 +344,10 @@ export const Tags = styled.div`
   font-weight: 500;
 
   cursor: pointer;
+  @media (max-width: 768px) {
+    height: 25px !important;
+    margin: 0 auto;
+  }
 `;
 // PLACES GRID
 export const GridPage = styled.div`
@@ -424,6 +428,64 @@ export const GridPage = styled.div`
     justify-content: flex-end;
     align-items: flex-end;
   }
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px minmax(300px, 100%);
+    width: 100%;
+    gap: 15px;
+    div:nth-of-type(1) {
+      grid-column: 1/3;
+      margin: 0 auto;
+      width: 80%;
+      h1 {
+        font-size: 24px;
+      }
+    }
+    div:nth-of-type(2) {
+      grid-column: 1/3;
+    }
+    div:nth-of-type(3) {
+      grid-column: 1/3;
+      grid-row: 4;
+
+      div {
+        width: 100%;
+
+        font-size: 10px;
+        display: flex;
+        flex-direction: column;
+        p {
+          margin: 0 auto;
+        }
+        span {
+          margin: 0 auto;
+        }
+        div {
+          width: 80%;
+          height: 50%;
+          flex-direction: row;
+        }
+      }
+    }
+    div:nth-of-type(4) {
+      grid-column: 1/3;
+      grid-row: 5;
+      align-items: center;
+      justify-content: center;
+    }
+    div:nth-of-type(5) {
+      grid-column: 1/3;
+      grid-row: 3;
+      margin: 0 auto;
+      width: 80%;
+    }
+    div:nth-of-type(8) {
+      grid-column: 1/3;
+      grid-row: 6;
+      margin: 0 auto;
+      width: 80%;
+    }
+  }
 `;
 //IMAGES
 export const GridImageDiv = styled.div`
@@ -455,6 +517,30 @@ export const GridImageDiv = styled.div`
       width: 200px;
       height: 100%;
       object-fit: contain;
+    }
+  }
+  @media (max-width: 768px) {
+    margin: 0 auto;
+    grid-column: 1/3;
+    grid-row: 2;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    div:nth-of-type(1) {
+      width: 100%;
+      margin: 0 auto;
+      img {
+        width: 300px;
+      }
+    }
+
+    div {
+      width: 100%;
+      margin: 0 auto;
+      img {
+        width: 300px;
+      }
     }
   }
 `;
@@ -604,6 +690,74 @@ export const EventsGrid = styled.div<TextLength>`
       height: 250px;
       padding: 5px;
       border-radius: 5px;
+    }
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 250px minmax(300px, 100%);
+    width: 100%;
+    gap: 5px;
+    //Text h1
+    div:nth-of-type(1) {
+      grid-column: 1/3;
+      grid-row: 1/2;
+      margin: 0 auto;
+
+      height: 100%;
+      width: 80%;
+      div {
+        height: 100px;
+        margin: 0 auto;
+        span {
+          margin: 0 auto;
+        }
+      }
+      button {
+        width: 100px;
+
+        padding: 15px;
+        font-size: 12px;
+      }
+
+      h1 {
+        margin: 15px auto;
+        padding: 15px 0;
+        font-size: 24px;
+      }
+      span {
+        font-size: 10px;
+      }
+    }
+    // The Image Mobile (main)
+    div:nth-of-type(2) {
+      margin: 35px auto;
+      grid-column: 1/3;
+      grid-row: 3/4;
+
+      div {
+        width: 150px;
+        height: 150px;
+      }
+    }
+    //Tags mobile
+    div:nth-of-type(5) {
+      grid-column: 1/3;
+      grid-row: 5/6;
+      align-items: center;
+      justify-content: center;
+    }
+    // Description mobile
+    div:nth-of-type(6) {
+      grid-column: 1/3;
+      width: 80%;
+      grid-row: 2/3;
+    }
+    div:nth-of-type(7) {
+      grid-column: 1/3;
+
+      width: 80%;
+      grid-row: 6/7;
+      flex-direction: column;
     }
   }
 `;
@@ -825,6 +979,11 @@ export const FormColumnFlex = styled.form`
       cursor: initial;
     }
   }
+  @media (max-width: 768px) {
+    input[type="submit"] {
+      margin: 55px auto;
+    }
+  }
 `;
 
 export const ReviewTextArea = styled.textarea`
@@ -833,5 +992,8 @@ export const ReviewTextArea = styled.textarea`
   padding: 15px;
   &:focus {
     outline: none;
+  }
+  @media (max-width: 768px) {
+    width: 80%;
   }
 `;

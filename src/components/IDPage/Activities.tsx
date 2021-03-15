@@ -173,16 +173,16 @@ const Activities: React.FC<Props> = ({ data }) => {
             <img src={modalImage} alt={""} />
           </div>
         </ImageModal>
-        <div
-          style={{
-            gridColumn: "1/4",
-            borderTop: "1px solid #ccc",
-            paddingTop: "15px",
-          }}
-        >
-          <PostReview id={data.id} />
-        </div>
       </EventsGrid>
+      <div
+        style={{
+          gridColumn: "1/4",
+          borderTop: "1px solid #ccc",
+          paddingTop: "15px",
+        }}
+      >
+        <PostReview id={data.id} />
+      </div>
       <div style={{ width: "80%", margin: "0 auto" }}>
         <SvgContainer width={200} height={150} style={{ margin: "0 auto" }}>
           <PlacesIcon /> <h1> Location</h1>
