@@ -15,6 +15,7 @@ import { Cookies } from "react-cookie";
 import Nearby from "./components/Pages/Nearby";
 import MapsAPI from "./components/MapsAPI/MapsAPI";
 import Search from "./components/Pages/Search";
+import ForgotPassword from "./components/User/ForgotPassword";
 
 function App(): JSX.Element {
   const { state, dispatch } = useContext(Store);
@@ -119,6 +120,12 @@ function App(): JSX.Element {
           <SVGPageHeader>
             <h1 style={{ color: "#0093e9" }}>Register</h1>
             <Register />
+          </SVGPageHeader>
+        </Route>
+        <Route path="/forgotpassword">
+          <SVGPageHeader>
+            <h1 style={{ color: "#0093e9" }}>Forgotten password</h1>
+            <ForgotPassword />
           </SVGPageHeader>
         </Route>
         <Route path="/">

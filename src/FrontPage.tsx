@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./App.css";
 import CarouselComp from "./components/StyledComponents/Carousel/Carousel";
 
@@ -30,12 +31,18 @@ function FrontPage() {
   ); //placesto eat
   const { data } = places; //Places
 
+  const linkStyle = { textDecoration: "none", color: "#044368" };
   return (
     <div style={{ width: "100%" }}>
       <CarouselContainer>
         <SvgContainer width={250} height={170}>
           <DinnerIcon />
-          <h1>Restaurants </h1>{" "}
+          <h1>
+            {" "}
+            <Link to="/placetoeat" style={linkStyle}>
+              Restaurants
+            </Link>{" "}
+          </h1>{" "}
         </SvgContainer>
         {placeToEat.error ? (
           <h1 style={{ color: "red" }}>Error, please refresh!</h1>
@@ -46,7 +53,13 @@ function FrontPage() {
 
       <CarouselContainer>
         <SvgContainer width={150} height={150}>
-          <PlacesIcon /> <h1> Places</h1>
+          <PlacesIcon />{" "}
+          <h1>
+            <Link to="/allplaces" style={linkStyle}>
+              {" "}
+              Places
+            </Link>
+          </h1>
         </SvgContainer>
         {places.error ? (
           <h1 style={{ color: "red" }}>Error, please refresh!</h1>
@@ -57,7 +70,13 @@ function FrontPage() {
 
       <CarouselContainer>
         <SvgContainer width={200} height={160}>
-          <ActivitiesIcon /> <h1> Activities</h1>
+          <ActivitiesIcon />{" "}
+          <h1>
+            <Link to="/activities" style={linkStyle}>
+              {" "}
+              Activities
+            </Link>
+          </h1>
         </SvgContainer>
         {activities.error ? (
           <h1 style={{ color: "red" }}>Error, please refresh!</h1>
@@ -68,7 +87,13 @@ function FrontPage() {
 
       <CarouselContainer>
         <SvgContainer width={150} height={160}>
-          <EventsIcon /> <h1> Events</h1>
+          <EventsIcon />{" "}
+          <h1>
+            <Link to="/events" style={linkStyle}>
+              {" "}
+              Events
+            </Link>
+          </h1>
         </SvgContainer>
         {events.error ? (
           <h1 style={{ color: "red" }}>Error, please refresh!</h1>

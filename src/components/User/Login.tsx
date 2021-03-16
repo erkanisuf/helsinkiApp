@@ -8,6 +8,7 @@ import {
 import { useCookies } from "react-cookie";
 import { Store } from "../../Context/AppContext";
 import LoadingIcon from "../StyledComponents/SvgIcons/LoadingIcon";
+import { Link } from "react-router-dom";
 
 interface Props {
   open: boolean;
@@ -104,7 +105,9 @@ const Login: React.FC<Props> = ({ open }) => {
             <LoadingIcon />
           </SvgContainer>
         )}
-        <p>Forgot password?</p>
+        <p>
+          <Link to="forgotpassword">Forgot password?</Link>
+        </p>
         <div style={{ color: "red" }}>
           {error &&
             error.map((el) => {
