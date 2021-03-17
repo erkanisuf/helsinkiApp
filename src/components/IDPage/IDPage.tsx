@@ -46,7 +46,7 @@ const IDPage = () => {
   const [data, setData] = useState<IDdata | any>();
   const [error, setError] = useState<boolean>(false);
   const history = useHistory();
-  console.log(id, "location");
+
   useEffect(() => {
     const abortCont = new AbortController();
 

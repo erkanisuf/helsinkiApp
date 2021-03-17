@@ -13,7 +13,7 @@ const Register = () => {
   });
   const [error, setError] = useState<string[]>([]);
   const [succs, setSuccs] = useState<string>("");
-  console.log(newuser);
+
   const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewuser({ ...newuser, [e.target.name]: e.target.value });
   };
@@ -36,9 +36,7 @@ const Register = () => {
           if (!el.isSuccs) {
             setError(el.errors);
             setSuccs("");
-            console.log(el);
           } else {
-            console.log(el);
             setSuccs(el.email);
             setError([]);
             setNewuser({

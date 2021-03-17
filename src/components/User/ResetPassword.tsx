@@ -9,7 +9,6 @@ interface ParamTypes {
 const ResetPassword = () => {
   const location = useLocation<any>(); // Token
   const token = location.pathname.replace("/resetpassword/", ""); // tried with useParams but the tokens special chars f.ex //// make issue with the id
-  console.log(token);
 
   const [resetPassword, setresetPassword] = useState({
     Password: "",
@@ -41,12 +40,10 @@ const ResetPassword = () => {
         })
 
         .then((el: any) => {
-          console.log(el);
           if (!el.isSuccs) {
             setError(el.errors);
             setSuccs("");
             setLoading(false);
-            console.log(el);
           } else {
             setSuccs(el.email);
             setError([]);

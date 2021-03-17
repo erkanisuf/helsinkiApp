@@ -41,16 +41,13 @@ const Login: React.FC<Props> = ({ open }) => {
       })
 
       .then((el: any) => {
-        console.log(el);
         if (!el.isSuccs) {
           setError(el.errors);
           setSuccs("");
           setLoading(false);
-          console.log(el);
         } else {
           const date = new Date(new Date().getTime() + 60 * 60 * 1000); // Expires in 1 minute (change 1 if want more),in backend is diffrent for now CHANGE LATER!
-          console.log(typeof date);
-          console.log(el);
+
           setCookie("loged_in", el.token, {
             path: "/",
             expires: date,
@@ -74,7 +71,6 @@ const Login: React.FC<Props> = ({ open }) => {
       });
   };
 
-  console.log("");
   return (
     <LoginForm open={open}>
       <form onSubmit={LogIn}>

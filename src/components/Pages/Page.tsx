@@ -47,7 +47,7 @@ const Page: React.FC<Props> = ({ link, type }) => {
   const { state, dispatch } = useContext(Store);
   const location = useLocation(); // Router React - using location to refetch in case path changes.
   const allItems = useFetch(link, location.pathname);
-  console.log(allItems);
+
   const [data, setData] = useState<Data[]>(allItems.data);
   const [limit, setLimit] = useState<number>(20); // How many items per page
   const [start, setStart] = useState<number>(0); // From where in the Api to start

@@ -20,7 +20,7 @@ import ResetPassword from "./components/User/ResetPassword";
 
 function App(): JSX.Element {
   const { state, dispatch } = useContext(Store);
-  console.log(state);
+  // Gets the Location when application Loads if user allows the browser !
   function geoloc() {
     navigator.geolocation.getCurrentPosition(function (position) {
       dispatch({
@@ -43,7 +43,6 @@ function App(): JSX.Element {
   const cookies = new Cookies();
   const usercookie = cookies.get("loged_in");
   useEffect(() => {
-    console.log(usercookie, "mycooki");
     if (!usercookie) {
       dispatch({ type: "LOG_OUT", is_loged_in: false });
     } else {

@@ -119,11 +119,9 @@ const Search = () => {
         }
       )
         .then((res) => {
-          console.log(res);
           return res.json();
         })
         .then((res) => {
-          console.log(res, "WTF");
           if (!res.data.length) {
             setSearchresult("No items were found with these tags:");
             setLoading(false);

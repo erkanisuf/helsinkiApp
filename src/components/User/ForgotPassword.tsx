@@ -24,12 +24,10 @@ const ForgotPassword = () => {
         })
 
         .then((el: any) => {
-          console.log(el);
           if (!el.isSuccs) {
             setError(el.errors);
             setSuccs("");
             setLoading(false);
-            console.log(el);
           } else {
             setSuccs(el.email);
             setError([]);
