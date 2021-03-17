@@ -115,7 +115,10 @@ const Places: React.FC<Props> = ({ data }) => {
         <div>
           <h1>{data.name.fi} </h1>
           <div>
-            <a href={data.info_url}> Website </a>
+            <a href={data.info_url} target="blank">
+              {" "}
+              Website{" "}
+            </a>
           </div>
         </div>
         {/* Location */}
