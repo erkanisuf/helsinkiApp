@@ -106,7 +106,9 @@ const Login: React.FC<Props> = ({ open }) => {
           </SvgContainer>
         )}
         <p>
-          <Link to="forgotpassword">Forgot password?</Link>
+          <Link to="/forgotpassword" style={{ color: "white" }}>
+            Forgot password?
+          </Link>
         </p>
         <div style={{ color: "red" }}>
           {error &&

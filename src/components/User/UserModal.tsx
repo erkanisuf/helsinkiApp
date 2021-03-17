@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import Login from "./Login";
-import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
+import {
+  AiFillCaretDown,
+  AiFillCaretUp,
+  AiFillCloseCircle,
+} from "react-icons/ai";
 import { LoginForm, Modal } from "../StyledComponents/Styles";
 import { Link } from "react-router-dom";
 import { Store } from "../../Context/AppContext";
@@ -60,6 +64,19 @@ const UserModal = () => {
         </Link>{" "}
       </span>
       <Modal open={open}>
+        <div
+          onClick={() => setOpen(false)}
+          style={{
+            cursor: "Pointer",
+            position: "absolute",
+            top: 3,
+            left: 10,
+            fontSize: "18px",
+          }}
+        >
+          {" "}
+          <AiFillCloseCircle />
+        </div>
         <LoginForm open={open}>
           <Login open={open} />
         </LoginForm>

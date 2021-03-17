@@ -57,6 +57,9 @@ export const ButtonCards = styled.div`
   p {
     margin: 0;
   }
+  @media (max-width: 321px) {
+    max-width: 50px;
+  }
   @media (max-width: 768px) {
     width: 80px;
     height: 60px;
@@ -185,8 +188,26 @@ export const ItemsCard = styled.div<CardProps>`
     padding: 5px;
     height: 150px;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 321px) {
+    max-width: 100px;
+  }
+  @media (max-width: 375px) {
+    width: 130px;
+    height: 250px;
+    margin: 8px;
+    span {
+      font-size: 8px;
+    }
+  }
+  @media (max-width: 768px) and (min-width: 376px) {
     width: ${(props) => props.width}px;
+    height: 250px;
+    span {
+      font-size: 10px;
+    }
+  }
+  @media (max-width: 1024px) and (min-width: 769px) {
+    width: 200px;
     height: 250px;
     span {
       font-size: 10px;

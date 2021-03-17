@@ -28,7 +28,7 @@ type Images = {
 
 const responsive = {
   superLargeDesktop: {
-    // the naming can be any, depends on you.
+    // the naming can be any.
     breakpoint: { max: 4000, min: 1801 },
     items: 4,
   },
@@ -37,16 +37,16 @@ const responsive = {
     items: 4,
   },
   desktoptw: {
-    breakpoint: { max: 1400, min: 1025 },
-    items: 3,
+    breakpoint: { max: 1400, min: 1024 },
+    items: 4,
   },
 
   tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2,
+    breakpoint: { max: 1023, min: 464 },
+    items: 3,
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 464, min: 321 },
     items: 2,
   },
 };

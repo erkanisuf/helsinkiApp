@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FormEvent } from "react";
 import { LoginForm, SvgContainer } from "../StyledComponents/Styles";
 import LoadingIcon from "../StyledComponents/SvgIcons/LoadingIcon";
 
@@ -7,7 +8,43 @@ const ForgotPassword = () => {
   const [error, setError] = useState<string[]>([]);
   const [succs, setSuccs] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
-  const forgotPasswordEmail = () => {};
+  const forgotPasswordEmail = (e: FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    if (!email) {
+      setError(["Please write valid email adress!"]);
+    } else {
+      fetch(`${process.env.REACT_APP_SERVER_URL}/api/user/forgotpassword`, {
+        method: "POST",
+        body: JSON.stringify(email),
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((el) => {
+          return el.json();
+        })
+
+        .then((el: any) => {
+          console.log(el);
+          if (!el.isSuccs) {
+            setError(el.errors);
+            setSuccs("");
+            setLoading(false);
+            console.log(el);
+          } else {
+            setSuccs(el.email);
+            setError([]);
+            setLoading(false);
+            setEmail("");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setSuccs("");
+          setError(["Error , please try again"]);
+          setLoading(false);
+        });
+    }
+  };
   const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
@@ -32,7 +69,7 @@ const ForgotPassword = () => {
             width: "300px",
           }}
           type="submit"
-          value="Send password reset"
+          value="Submit"
         />
         {}
         {loading && (

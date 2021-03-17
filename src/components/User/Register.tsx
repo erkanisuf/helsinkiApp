@@ -41,6 +41,13 @@ const Register = () => {
             console.log(el);
             setSuccs(el.email);
             setError([]);
+            setNewuser({
+              Firstname: "",
+              Lastname: "",
+              Password: "",
+              ConfirmPassword: "",
+              Email: "",
+            });
           }
         })
         .catch((err) => {

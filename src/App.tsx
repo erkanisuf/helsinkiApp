@@ -16,6 +16,7 @@ import Nearby from "./components/Pages/Nearby";
 import MapsAPI from "./components/MapsAPI/MapsAPI";
 import Search from "./components/Pages/Search";
 import ForgotPassword from "./components/User/ForgotPassword";
+import ResetPassword from "./components/User/ResetPassword";
 
 function App(): JSX.Element {
   const { state, dispatch } = useContext(Store);
@@ -126,6 +127,12 @@ function App(): JSX.Element {
           <SVGPageHeader>
             <h1 style={{ color: "#0093e9" }}>Forgotten password</h1>
             <ForgotPassword />
+          </SVGPageHeader>
+        </Route>
+        <Route path="/resetpassword/:id">
+          <SVGPageHeader>
+            <h1 style={{ color: "#0093e9" }}>Forgotten password</h1>
+            <ResetPassword />
           </SVGPageHeader>
         </Route>
         <Route path="/">
