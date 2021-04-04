@@ -7,7 +7,7 @@ Your guide for city of Helsinki. Including places,events,activities and more abo
 
 - Frontend
   - React
-  - Redux
+  - React Context API
   - Styled Components
   - Leaflet
  - Backend ([Repo of backend](https://github.com/erkanisuf/creatingNETCore5Backend/) )
