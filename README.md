@@ -6,6 +6,7 @@ Your guide for city of Helsinki. Including places,events,activities and more abo
 ## Tech used 
 
 - Frontend
+  - Typescript
   - React
   - React Context API
   - Styled Components
@@ -19,6 +20,10 @@ Your guide for city of Helsinki. Including places,events,activities and more abo
 ## Preview
 <br />
 Live demo: https://helsinkiguide.netlify.app/
+<br />
+Backend Deployed to: Azure
+<br />
+Frontend Deployed to: Netlify
 <br />
 
 ## Features of the application
