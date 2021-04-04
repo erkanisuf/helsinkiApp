@@ -12,6 +12,8 @@ Your guide for city of Helsinki. Including places,events,activities and more abo
   - Leaflet
  - Backend ([Repo of backend](https://github.com/erkanisuf/creatingNETCore5Backend/) )
     - .Net Core 5
+    - SendGrid Mailer
+    - Open API helsinki
 
 
 ## Preview
